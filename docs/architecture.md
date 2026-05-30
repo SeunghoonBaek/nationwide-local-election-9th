@@ -63,6 +63,13 @@ Browser (page.tsx)
 District and electoral-district dropdowns share the same NEC code list (`wiwName` /
 `sggName`) so labels stay consistent (e.g. `수원시장안구` not `수원시` for type 5).
 
+### Location → 시·도 (시·도지사 / 교육감)
+
+- `GET /api/location?address=…` — heuristic parse of the address prefix (no third-party key).
+- `GET /api/location?lat=&lng=` — reverse geocode via Nominatim (server-side `User-Agent`).
+- `src/lib/sido-names.ts` normalizes aliases (e.g. `서울` → `서울특별시`) against the NEC sido list.
+- UI quick actions set `sgType` 3 or 11 and `sgg = sido` (province-wide races).
+
 ## UI layout
 
 | Viewport | Candidate results |

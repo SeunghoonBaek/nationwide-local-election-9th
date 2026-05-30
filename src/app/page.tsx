@@ -37,6 +37,10 @@ export default function Home() {
   const [topError, setTopError] = useState<string | null>(null);
   const [keyMissing, setKeyMissing] = useState(false);
 
+  const [addressInput, setAddressInput] = useState("");
+  const [locating, setLocating] = useState(false);
+  const [locationHint, setLocationHint] = useState<string | null>(null);
+
   const sidoWide = sgType !== "" && TYPES_SIDO_WIDE.includes(sgType);
 
   const handleError = useCallback((e: unknown) => {
@@ -82,23 +86,124 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sgType, sido, gusigun, sidoWide]);
 
-  const search = useCallback(async () => {
-    if (!sgType || !sido || !sgg) return;
-    setLoading(true);
-    setTopError(null);
-    setCandidates(null);
-    try {
-      const q = new URLSearchParams({ sgType, sido, sgg }).toString();
-      const data = await fetchJson<{ candidates: CandidateView[] }>(
-        `/api/candidates?${q}`
+  const search = useCallback(
+    async (override?: { sgType: SgTypeCode; sido: string; sgg: string }) => {
+      const type = override?.sgType ?? sgType;
+      const sd = override?.sido ?? sido;
+      const district = override?.sgg ?? sgg;
+      if (!type || !sd || !district) return;
+      setLoading(true);
+      setTopError(null);
+      setCandidates(null);
+      try {
+        const q = new URLSearchParams({
+          sgType: type,
+          sido: sd,
+          sgg: district,
+        }).toString();
+        const data = await fetchJson<{ candidates: CandidateView[] }>(
+          `/api/candidates?${q}`
+        );
+        if (override) {
+          setSgType(type);
+          setSido(sd);
+          setSgg(district);
+        }
+        setCandidates(data.candidates);
+      } catch (e) {
+        handleError(e);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [sgType, sido, sgg, handleError]
+  );
+
+  const applySidoFromLocation = useCallback(
+    (resolvedSido: string, label?: string) => {
+      setSido(resolvedSido);
+      setLocationHint(
+        label
+          ? `${resolvedSido} (「${label.length > 40 ? `${label.slice(0, 40)}…` : label}」)`
+          : resolvedSido
       );
-      setCandidates(data.candidates);
+      if (sgType && TYPES_SIDO_WIDE.includes(sgType)) {
+        setSgg(resolvedSido);
+      }
+    },
+    [sgType]
+  );
+
+  const resolveByAddress = useCallback(async () => {
+    const q = addressInput.trim();
+    if (q.length < 2) {
+      setTopError("주소를 2글자 이상 입력해 주세요.");
+      return;
+    }
+    setLocating(true);
+    setTopError(null);
+    try {
+      const data = await fetchJson<{
+        sido: string;
+        label?: string;
+      }>(`/api/location?${new URLSearchParams({ address: q })}`);
+      applySidoFromLocation(data.sido, data.label ?? q);
     } catch (e) {
       handleError(e);
     } finally {
-      setLoading(false);
+      setLocating(false);
     }
-  }, [sgType, sido, sgg, handleError]);
+  }, [addressInput, applySidoFromLocation, handleError]);
+
+  const resolveByGps = useCallback(() => {
+    if (!navigator.geolocation) {
+      setTopError("이 브라우저에서는 위치 정보를 사용할 수 없습니다.");
+      return;
+    }
+    setLocating(true);
+    setTopError(null);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude: lat, longitude: lng } = pos.coords;
+          const data = await fetchJson<{
+            sido: string;
+            label?: string;
+          }>(
+            `/api/location?${new URLSearchParams({
+              lat: String(lat),
+              lng: String(lng),
+            })}`
+          );
+          applySidoFromLocation(data.sido, data.label);
+        } catch (e) {
+          handleError(e);
+        } finally {
+          setLocating(false);
+        }
+      },
+      (err) => {
+        setLocating(false);
+        const msg =
+          err.code === 1
+            ? "위치 권한이 거부되었습니다. 주소로 시·도를 찾아 주세요."
+            : "현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.";
+        setTopError(msg);
+      },
+      { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
+    );
+  }, [applySidoFromLocation, handleError]);
+
+  const searchSidoWide = useCallback(
+    (type: "3" | "11") => {
+      if (!sido) {
+        setTopError("먼저 주소 또는 현재 위치로 시·도를 찾아 주세요.");
+        return;
+      }
+      void search({ sgType: type, sido, sgg: sido });
+    },
+    [sido, search]
+  );
 
   const canSearch = Boolean(sgType && sido && sgg);
 
@@ -127,6 +232,71 @@ export default function Home() {
           </p>
         </div>
       )}
+
+      {/* 시·도지사·교육감: 주소 / GPS */}
+      <section className="mb-4 shrink-0 rounded-xl border border-blue-200 bg-blue-50/50 p-4 sm:p-5 dark:border-blue-900/50 dark:bg-blue-950/20">
+        <h2 className="text-sm font-semibold text-neutral-800 dark:text-neutral-100">
+          시·도지사·교육감 — 내 지역 찾기
+        </h2>
+        <p className="mt-1 text-xs text-neutral-500">
+          주소 또는 현재 위치로 시·도를 자동 설정한 뒤, 아래 버튼으로 후보를
+          바로 조회할 수 있습니다.
+        </p>
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-stretch">
+          <input
+            type="text"
+            value={addressInput}
+            onChange={(e) => setAddressInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") void resolveByAddress();
+            }}
+            placeholder="예: 경기도 수원시 영통구 …"
+            disabled={locating}
+            className="min-w-0 flex-1 rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900"
+          />
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              onClick={() => void resolveByAddress()}
+              disabled={locating}
+              className="rounded-lg border border-blue-600 bg-white px-4 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-50 disabled:opacity-40 dark:bg-neutral-900 dark:hover:bg-blue-950"
+            >
+              {locating ? "찾는 중…" : "주소로 찾기"}
+            </button>
+            <button
+              type="button"
+              onClick={resolveByGps}
+              disabled={locating}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-40"
+            >
+              현재 위치
+            </button>
+          </div>
+        </div>
+        {locationHint && (
+          <p className="mt-2 text-xs text-blue-800 dark:text-blue-300">
+            설정된 시·도: <span className="font-semibold">{locationHint}</span>
+          </p>
+        )}
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => searchSidoWide("3")}
+            disabled={!sido || loading || locating}
+            className="rounded-lg bg-neutral-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-900 disabled:opacity-40 dark:bg-neutral-200 dark:text-neutral-900 dark:hover:bg-white"
+          >
+            시·도지사 후보 조회
+          </button>
+          <button
+            type="button"
+            onClick={() => searchSidoWide("11")}
+            disabled={!sido || loading || locating}
+            className="rounded-lg border border-neutral-400 bg-white px-4 py-2 text-sm font-medium text-neutral-800 transition hover:bg-neutral-50 disabled:opacity-40 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+          >
+            교육감 후보 조회
+          </button>
+        </div>
+      </section>
 
       {/* 선택 영역 */}
       <section className="grid shrink-0 grid-cols-1 gap-3 rounded-xl border border-neutral-200 bg-white/60 p-4 sm:grid-cols-2 sm:gap-4 sm:p-5 lg:grid-cols-4 dark:border-neutral-800 dark:bg-neutral-900/40">
@@ -175,7 +345,7 @@ export default function Home() {
 
         <div className="sm:col-span-2 lg:col-span-4">
           <button
-            onClick={search}
+            onClick={() => void search()}
             disabled={!canSearch || loading}
             className="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
           >
