@@ -3,21 +3,6 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
 
-const BulletinNativePdfViewer = dynamic(
-  () =>
-    import("@/components/bulletin-native-pdf-viewer").then(
-      (m) => m.BulletinNativePdfViewer
-    ),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex flex-1 items-center justify-center bg-neutral-100 text-sm text-neutral-500 dark:bg-neutral-950">
-        선거공보 불러오는 중…
-      </div>
-    ),
-  }
-);
-
 const BulletinPdfViewer = dynamic(
   () =>
     import("@/components/bulletin-pdf-viewer").then((m) => m.BulletinPdfViewer),
@@ -30,8 +15,6 @@ const BulletinPdfViewer = dynamic(
     ),
   }
 );
-
-type ViewerMode = "native" | "canvas";
 
 export function bulletinViewerSrc(bulletinPath: string): string {
   return `/api/bulletin?path=${encodeURIComponent(bulletinPath)}`;
@@ -81,7 +64,6 @@ export function BulletinViewerModal({
 }) {
   const src = bulletinViewerSrc(bulletinPath);
   const [size, setSize] = useState(defaultSize);
-  const [viewerMode, setViewerMode] = useState<ViewerMode>("native");
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -171,34 +153,6 @@ export function BulletinViewerModal({
           </h2>
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">
             <div
-              className="flex items-center gap-0.5"
-              role="group"
-              aria-label="보기 방식"
-            >
-              <button
-                type="button"
-                onClick={() => setViewerMode("native")}
-                className={`rounded px-1.5 py-0.5 text-[11px] ${
-                  viewerMode === "native"
-                    ? "bg-neutral-200 text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100"
-                    : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-                }`}
-              >
-                기본
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewerMode("canvas")}
-                className={`rounded px-1.5 py-0.5 text-[11px] ${
-                  viewerMode === "canvas"
-                    ? "bg-neutral-200 text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100"
-                    : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-                }`}
-              >
-                확대·스크롤
-              </button>
-            </div>
-            <div
               className="hidden items-center gap-0.5 sm:flex"
               role="group"
               aria-label="창 크기"
@@ -239,11 +193,9 @@ export function BulletinViewerModal({
             </button>
           </div>
         </div>
-        {viewerMode === "native" ? (
-          <BulletinNativePdfViewer src={src} title={title} />
-        ) : (
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <BulletinPdfViewer src={src} title={title} />
-        )}
+        </div>
         {/* Desktop resize handles */}
         <div
           role="separator"

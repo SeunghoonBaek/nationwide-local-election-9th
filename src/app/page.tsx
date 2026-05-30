@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   SG_DATE,
   SELECTABLE_SG_TYPES,
@@ -10,6 +10,12 @@ import {
   type SgTypeCode,
 } from "@/lib/constants";
 import { matchGusigunToElectionList } from "@/lib/gusigun-names";
+import {
+  pickPersistedFields,
+  readHomeState,
+  writeHomeState,
+  type HomePersistedSearch,
+} from "@/lib/home-state-storage";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { BulletinViewerModal } from "@/components/bulletin-viewer";
 import type { CandidateView } from "./api/candidates/route";
@@ -48,12 +54,99 @@ export default function Home() {
   const [locationHint, setLocationHint] = useState<string | null>(null);
   const [locationGusigun, setLocationGusigun] = useState("");
 
+  const [lastSearch, setLastSearch] = useState<HomePersistedSearch | null>(null);
+  const [scrollY, setScrollY] = useState(0);
+  const [storageReady, setStorageReady] = useState(false);
+
+  const persistReady = useRef(false);
+  const restoreSearchDone = useRef(false);
+  const scrollRestored = useRef(false);
+
   const sidoWide = sgType !== "" && TYPES_SIDO_WIDE.includes(sgType);
 
   const handleError = useCallback((e: unknown) => {
     const err = e as Error & { hasKey?: boolean };
     if (err.hasKey === false) setKeyMissing(true);
     setTopError(err.message);
+  }, []);
+
+  useLayoutEffect(() => {
+    const saved = readHomeState();
+    if (saved) {
+      setSido(saved.sido);
+      setSgType(saved.sgType);
+      setGusigun(saved.gusigun);
+      setSgg(saved.sgg);
+      setAddressInput(saved.addressInput);
+      setLocationHint(saved.locationHint);
+      setLocationGusigun(saved.locationGusigun);
+      setLastSearch(saved.lastSearch);
+      setScrollY(saved.scrollY);
+    }
+    setStorageReady(true);
+    persistReady.current = true;
+  }, []);
+
+  useEffect(() => {
+    if (!persistReady.current) return;
+    writeHomeState(
+      pickPersistedFields({
+        sido,
+        sgType,
+        gusigun,
+        sgg,
+        addressInput,
+        locationHint,
+        locationGusigun,
+        lastSearch,
+        scrollY,
+      })
+    );
+  }, [
+    sido,
+    sgType,
+    gusigun,
+    sgg,
+    addressInput,
+    locationHint,
+    locationGusigun,
+    lastSearch,
+    scrollY,
+  ]);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const onScroll = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => setScrollY(window.scrollY), 150);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (!e.persisted) return;
+      const saved = readHomeState();
+      if (!saved) return;
+      setSido(saved.sido);
+      setSgType(saved.sgType);
+      setGusigun(saved.gusigun);
+      setSgg(saved.sgg);
+      setAddressInput(saved.addressInput);
+      setLocationHint(saved.locationHint);
+      setLocationGusigun(saved.locationGusigun);
+      setLastSearch(saved.lastSearch);
+      setScrollY(saved.scrollY);
+      setCandidates(null);
+      scrollRestored.current = false;
+      restoreSearchDone.current = false;
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
   }, []);
 
   // Load province (sido) list
@@ -67,6 +160,7 @@ export default function Home() {
 
   // Load districts (gu/si/gun) when province or election type changes
   useEffect(() => {
+    if (!storageReady) return;
     setGusigunList([]);
     if (!sido || !sgType || sidoWide) {
       setLoadingGusigun(false);
@@ -78,27 +172,25 @@ export default function Home() {
     fetchJson<{ gusigun: string[] }>(`/api/gusigun?${q}`)
       .then((d) => {
         setGusigunList(d.gusigun);
-        if (locationGusigun) {
-          const matched = matchGusigunToElectionList(
-            locationGusigun,
-            d.gusigun
-          );
-          setGusigun(matched ?? "");
-        } else {
-          setGusigun("");
-        }
+        setGusigun((current) => {
+          if (locationGusigun) {
+            return matchGusigunToElectionList(locationGusigun, d.gusigun) ?? "";
+          }
+          if (current && d.gusigun.includes(current)) return current;
+          return "";
+        });
       })
       .catch(handleError)
       .finally(() => setLoadingGusigun(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sido, sgType, sidoWide, locationGusigun]);
+  }, [storageReady, sido, sgType, sidoWide, locationGusigun]);
 
   // Load electoral districts when election type / province / district changes
   useEffect(() => {
-    setSgg("");
-    setSggList([]);
+    if (!storageReady) return;
     if (!sido || !sgType) {
       setLoadingSgg(false);
+      setSggList([]);
       return;
     }
     if (sidoWide) {
@@ -109,16 +201,23 @@ export default function Home() {
     }
     if (!gusigun) {
       setLoadingSgg(false);
+      setSggList([]);
       return;
     }
     setLoadingSgg(true);
     const q = new URLSearchParams({ sgType, sido, gusigun }).toString();
     fetchJson<{ sgg: string[] }>(`/api/sgg?${q}`)
-      .then((d) => setSggList(d.sgg))
+      .then((d) => {
+        setSggList(d.sgg);
+        setSgg((current) => {
+          if (current && d.sgg.includes(current)) return current;
+          return "";
+        });
+      })
       .catch(handleError)
       .finally(() => setLoadingSgg(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sgType, sido, gusigun, sidoWide]);
+  }, [storageReady, sgType, sido, gusigun, sidoWide]);
 
   const search = useCallback(
     async (override?: { sgType: SgTypeCode; sido: string; sgg: string }) => {
@@ -144,6 +243,7 @@ export default function Home() {
           setSgg(district);
         }
         setCandidates(data.candidates);
+        setLastSearch({ sgType: type, sido: sd, sgg: district });
       } catch (e) {
         handleError(e);
       } finally {
@@ -152,6 +252,46 @@ export default function Home() {
     },
     [sgType, sido, sgg, handleError]
   );
+
+  useEffect(() => {
+    if (
+      !storageReady ||
+      restoreSearchDone.current ||
+      !lastSearch ||
+      candidates !== null ||
+      loadingSido ||
+      loadingGusigun ||
+      loadingSgg
+    ) {
+      return;
+    }
+    if (
+      lastSearch.sgType !== sgType ||
+      lastSearch.sido !== sido ||
+      lastSearch.sgg !== sgg
+    ) {
+      return;
+    }
+    restoreSearchDone.current = true;
+    void search(lastSearch);
+  }, [
+    storageReady,
+    lastSearch,
+    candidates,
+    search,
+    sgType,
+    sido,
+    sgg,
+    loadingSido,
+    loadingGusigun,
+    loadingSgg,
+  ]);
+
+  useEffect(() => {
+    if (!candidates?.length || scrollRestored.current || scrollY <= 0) return;
+    scrollRestored.current = true;
+    requestAnimationFrame(() => window.scrollTo(0, scrollY));
+  }, [candidates, scrollY]);
 
   const applyLocationFromLookup = useCallback(
     (resolved: { sido: string; gusigun?: string; label?: string }) => {
