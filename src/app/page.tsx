@@ -37,6 +37,9 @@ export default function Home() {
 
   const [candidates, setCandidates] = useState<CandidateView[] | null>(null);
   const [loading, setLoading] = useState(false);
+  const [loadingSido, setLoadingSido] = useState(true);
+  const [loadingGusigun, setLoadingGusigun] = useState(false);
+  const [loadingSgg, setLoadingSgg] = useState(false);
   const [topError, setTopError] = useState<string | null>(null);
   const [keyMissing, setKeyMissing] = useState(false);
 
@@ -55,18 +58,22 @@ export default function Home() {
 
   // Load province (sido) list
   useEffect(() => {
+    setLoadingSido(true);
     fetchJson<{ sido: string[] }>("/api/sido")
       .then((d) => setSidoList(d.sido))
-      .catch(handleError);
+      .catch(handleError)
+      .finally(() => setLoadingSido(false));
   }, [handleError]);
 
   // Load districts (gu/si/gun) when province or election type changes
   useEffect(() => {
     setGusigunList([]);
     if (!sido || !sgType || sidoWide) {
+      setLoadingGusigun(false);
       if (!locationGusigun) setGusigun("");
       return;
     }
+    setLoadingGusigun(true);
     const q = new URLSearchParams({ sgType, sido }).toString();
     fetchJson<{ gusigun: string[] }>(`/api/gusigun?${q}`)
       .then((d) => {
@@ -81,7 +88,8 @@ export default function Home() {
           setGusigun("");
         }
       })
-      .catch(handleError);
+      .catch(handleError)
+      .finally(() => setLoadingGusigun(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sido, sgType, sidoWide, locationGusigun]);
 
@@ -89,17 +97,26 @@ export default function Home() {
   useEffect(() => {
     setSgg("");
     setSggList([]);
-    if (!sido || !sgType) return;
+    if (!sido || !sgType) {
+      setLoadingSgg(false);
+      return;
+    }
     if (sidoWide) {
+      setLoadingSgg(false);
       setSggList([sido]);
       setSgg(sido);
       return;
     }
-    if (!gusigun) return;
+    if (!gusigun) {
+      setLoadingSgg(false);
+      return;
+    }
+    setLoadingSgg(true);
     const q = new URLSearchParams({ sgType, sido, gusigun }).toString();
     fetchJson<{ sgg: string[] }>(`/api/sgg?${q}`)
       .then((d) => setSggList(d.sgg))
-      .catch(handleError);
+      .catch(handleError)
+      .finally(() => setLoadingSgg(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sgType, sido, gusigun, sidoWide]);
 
@@ -352,9 +369,11 @@ export default function Home() {
               setLocationHint(null);
               setSido(v);
             }}
-            placeholder={sidoList.length ? "시·도 선택" : "불러오는 중…"}
+            placeholder={
+              loadingSido ? "데이터를 읽고 있습니다" : "시·도 선택"
+            }
             options={sidoList}
-            disabled={!sidoList.length}
+            disabled={loadingSido}
           />
         </Field>
 
@@ -398,12 +417,10 @@ export default function Home() {
               value={gusigun}
               onChange={setGusigun}
               placeholder={
-                locationGusigun && !gusigunList.length
-                  ? "불러오는 중…"
-                  : "구·시·군 선택"
+                loadingGusigun ? "데이터를 읽고 있습니다" : "구·시·군 선택"
               }
               options={gusigunList}
-              disabled={!sgType || !gusigunList.length}
+              disabled={!sgType || loadingGusigun || !gusigunList.length}
             />
           )}
         </Field>
@@ -412,9 +429,17 @@ export default function Home() {
           <Select
             value={sgg}
             onChange={setSgg}
-            placeholder={sggList.length ? "선거구 선택" : "—"}
+            placeholder={
+              loadingSgg
+                ? "데이터를 읽고 있습니다"
+                : sggList.length
+                  ? "선거구 선택"
+                  : gusigun
+                    ? "선거구 없음"
+                    : "구·시·군을 먼저 선택"
+            }
             options={sggList}
-            disabled={sidoWide || !sggList.length}
+            disabled={sidoWide || loadingSgg || !sggList.length}
           />
         </Field>
 
