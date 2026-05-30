@@ -11,8 +11,10 @@ import {
 } from "@/lib/constants";
 import { matchGusigunToElectionList } from "@/lib/gusigun-names";
 import {
+  clearHomeState,
   pickPersistedFields,
   readHomeState,
+  shouldRestoreHomeState,
   writeHomeState,
   type HomePersistedSearch,
 } from "@/lib/home-state-storage";
@@ -71,17 +73,21 @@ export default function Home() {
   }, []);
 
   useLayoutEffect(() => {
-    const saved = readHomeState();
-    if (saved) {
-      setSido(saved.sido);
-      setSgType(saved.sgType);
-      setGusigun(saved.gusigun);
-      setSgg(saved.sgg);
-      setAddressInput(saved.addressInput);
-      setLocationHint(saved.locationHint);
-      setLocationGusigun(saved.locationGusigun);
-      setLastSearch(saved.lastSearch);
-      setScrollY(saved.scrollY);
+    if (shouldRestoreHomeState()) {
+      const saved = readHomeState();
+      if (saved) {
+        setSido(saved.sido);
+        setSgType(saved.sgType);
+        setGusigun(saved.gusigun);
+        setSgg(saved.sgg);
+        setAddressInput(saved.addressInput);
+        setLocationHint(saved.locationHint);
+        setLocationGusigun(saved.locationGusigun);
+        setLastSearch(saved.lastSearch);
+        setScrollY(saved.scrollY);
+      }
+    } else {
+      clearHomeState();
     }
     setStorageReady(true);
     persistReady.current = true;

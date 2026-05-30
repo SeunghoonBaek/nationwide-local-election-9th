@@ -36,6 +36,24 @@ function isSgType(v: string): v is SgTypeCode {
   return ["3", "4", "5", "6", "11"].includes(v);
 }
 
+/** True only when the user returned via browser back/forward (not refresh or direct visit). */
+export function shouldRestoreHomeState(): boolean {
+  if (typeof window === "undefined") return false;
+  const nav = performance.getEntriesByType("navigation")[0] as
+    | PerformanceNavigationTiming
+    | undefined;
+  return nav?.type === "back_forward";
+}
+
+export function clearHomeState() {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* private mode */
+  }
+}
+
 export function readHomeState(): HomePersistedState | null {
   if (typeof window === "undefined") return null;
   try {

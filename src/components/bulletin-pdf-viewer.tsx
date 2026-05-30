@@ -16,6 +16,7 @@ const PDFJS_ASSETS = `https://unpkg.com/pdfjs-dist@${version}`;
 
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 4;
+const RENDER_ZOOM_DELAY_MS = 250;
 /** Retina phones often use 3x; cap to limit memory on extreme zoom. */
 const MAX_DPR = 3;
 const MAX_CANVAS_EDGE = 8192;
@@ -59,48 +60,69 @@ function PdfPageCanvas({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const taskRef = useRef<{ cancel: () => void } | null>(null);
+  const genRef = useRef(0);
+  const lockRef = useRef(Promise.resolve());
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || cssScale <= 0) return;
 
+    const gen = ++genRef.current;
     let cancelled = false;
 
-    (async () => {
-      taskRef.current?.cancel();
-      taskRef.current = null;
+    const run = async () => {
+      await lockRef.current.catch(() => {});
+      if (cancelled || gen !== genRef.current) return;
 
-      const page = await pdf.getPage(pageNumber);
-      if (cancelled) return;
+      try {
+        taskRef.current?.cancel();
+        taskRef.current = null;
 
-      const base = page.getViewport({ scale: 1 });
-      const renderScale = computeRenderScale(cssScale, base.width, base.height);
-      const cssViewport = page.getViewport({ scale: cssScale });
-      const viewport = page.getViewport({ scale: renderScale });
+        const page = await pdf.getPage(pageNumber);
+        if (cancelled || gen !== genRef.current) return;
 
-      const ctx = canvas.getContext("2d", { alpha: true });
-      if (!ctx || cancelled) return;
+        const base = page.getViewport({ scale: 1 });
+        const renderScale = computeRenderScale(cssScale, base.width, base.height);
+        const cssViewport = page.getViewport({ scale: cssScale });
+        const viewport = page.getViewport({ scale: renderScale });
 
-      canvas.width = Math.floor(viewport.width);
-      canvas.height = Math.floor(viewport.height);
-      canvas.style.width = `${Math.floor(cssViewport.width)}px`;
-      canvas.style.height = `${Math.floor(cssViewport.height)}px`;
+        if (cssViewport.width < 1 || cssViewport.height < 1) return;
 
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
+        const ctx = canvas.getContext("2d", { alpha: true });
+        if (!ctx || cancelled || gen !== genRef.current) return;
 
-      const task = page.render({
-        canvasContext: ctx,
-        viewport,
-        intent: "display",
-        background: "#ffffff",
-        canvas,
-      });
-      taskRef.current = task;
-      await task.promise;
-    })().catch(() => {
-      /* ignore render errors on unmount / cancel */
-    });
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+        canvas.style.width = `${Math.floor(cssViewport.width)}px`;
+        canvas.style.height = `${Math.floor(cssViewport.height)}px`;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+
+        const task = page.render({
+          canvas: null,
+          canvasContext: ctx,
+          viewport,
+          intent: "display",
+          background: "#ffffff",
+        });
+        if (cancelled || gen !== genRef.current) {
+          task.cancel();
+          return;
+        }
+        taskRef.current = task;
+        await task.promise;
+      } catch {
+        /* ignore render errors on unmount / cancel */
+      } finally {
+        if (gen === genRef.current) {
+          taskRef.current = null;
+        }
+      }
+    };
+
+    const pending = run();
+    lockRef.current = pending.catch(() => {});
 
     return () => {
       cancelled = true;
@@ -128,13 +150,17 @@ export function BulletinPdfViewer({
   const contentRef = useRef<HTMLDivElement>(null);
   const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
   const zoomRef = useRef(1);
+  const scrollOffsetWRef = useRef(0);
 
   const [loadState, setLoadState] = useState<LoadState>("loading");
   const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
   const [numPages, setNumPages] = useState(0);
   const [baseFit, setBaseFit] = useState(1);
+  /** Target zoom from buttons / pinch commit. */
   const [zoom, setZoom] = useState(1);
-  /** Live CSS scale during pinch — canvas re-renders only after pinch ends. */
+  /** Zoom baked into canvas — debounced to avoid overlapping PDF.js renders. */
+  const [renderZoom, setRenderZoom] = useState(1);
+  /** Live CSS scale during pinch. */
   const [pinchScale, setPinchScale] = useState(1);
   const [viewportTick, setViewportTick] = useState(0);
   const [layoutSize, setLayoutSize] = useState({ w: 0, h: 0 });
@@ -142,13 +168,15 @@ export function BulletinPdfViewer({
   zoomRef.current = zoom;
   pinchScaleRef.current = pinchScale;
 
-  const renderScale = baseFit * zoom;
+  const renderScale = baseFit * renderZoom;
+  const previewScale = renderZoom > 0 ? zoom / renderZoom : 1;
+  const liveScale = previewScale * pinchScale;
   const displayZoom = zoom * pinchScale;
 
   const measureFit = useCallback(async (pdf: PDFDocumentProxy) => {
     const page = await pdf.getPage(1);
     const natural = page.getViewport({ scale: 1 });
-    const containerW = scrollRef.current?.clientWidth ?? window.innerWidth - 32;
+    const containerW = scrollRef.current?.offsetWidth ?? window.innerWidth - 32;
     return Math.max(0.1, (containerW - 8) / natural.width);
   }, []);
 
@@ -176,6 +204,7 @@ export function BulletinPdfViewer({
         if (cancelled) return;
         setBaseFit(fit);
         setZoom(1);
+        setRenderZoom(1);
         setPinchScale(1);
         setLoadState("ready");
       } catch {
@@ -193,6 +222,12 @@ export function BulletinPdfViewer({
       pdfDoc?.destroy();
     };
   }, [pdfDoc]);
+
+  useEffect(() => {
+    if (zoom === renderZoom) return;
+    const id = window.setTimeout(() => setRenderZoom(zoom), RENDER_ZOOM_DELAY_MS);
+    return () => clearTimeout(id);
+  }, [zoom, renderZoom]);
 
   useEffect(() => {
     const onResize = () => setViewportTick((t) => t + 1);
@@ -245,7 +280,6 @@ export function BulletinPdfViewer({
       pinchRef.current = null;
     };
 
-    // Capture phase so pinch wins over scroll on iOS/Android.
     el.addEventListener("touchstart", onTouchStart, { passive: true, capture: true });
     el.addEventListener("touchmove", onTouchMove, { passive: false, capture: true });
     el.addEventListener("touchend", onTouchEnd, { capture: true });
@@ -264,37 +298,59 @@ export function BulletinPdfViewer({
     if (!el || !pdfDoc || loadState !== "ready") return;
 
     const updateFit = () => {
-      void measureFit(pdfDoc).then(setBaseFit);
+      const w = el.offsetWidth;
+      if (Math.abs(w - scrollOffsetWRef.current) < 2) return;
+      scrollOffsetWRef.current = w;
+      void measureFit(pdfDoc).then((next) => {
+        setBaseFit((prev) => (Math.abs(prev - next) < 0.001 ? prev : next));
+      });
     };
 
-    const ro = new ResizeObserver(updateFit);
+    scrollOffsetWRef.current = el.offsetWidth;
+    updateFit();
+
+    const ro = new ResizeObserver(() => {
+      requestAnimationFrame(updateFit);
+    });
     ro.observe(el);
     return () => ro.disconnect();
-  }, [loadState, pdfDoc, measureFit]);
+  }, [loadState, pdfDoc, measureFit, viewportTick]);
 
   useEffect(() => {
     const node = contentRef.current;
     if (!node || loadState !== "ready") return;
 
+    let raf = 0;
     const measure = () => {
-      setLayoutSize({ w: node.offsetWidth, h: node.offsetHeight });
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const w = node.offsetWidth;
+        const h = node.offsetHeight;
+        setLayoutSize((prev) =>
+          prev.w === w && prev.h === h ? prev : { w, h }
+        );
+      });
     };
 
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(node);
-    return () => ro.disconnect();
-  }, [loadState, zoom, numPages, viewportTick]);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
+  }, [loadState, numPages, renderZoom]);
 
-  const zoomIn = () => {
+  const bumpZoom = (delta: number) => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     setPinchScale(1);
-    setZoom((z) => clampZoom(z + 0.25));
+    setZoom((z) => clampZoom(z + delta));
   };
-  const zoomOut = () => {
-    setPinchScale(1);
-    setZoom((z) => clampZoom(z - 0.25));
-  };
-  const resetZoom = () => {
+
+  const resetZoom = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     setPinchScale(1);
     setZoom(1);
   };
@@ -323,12 +379,14 @@ export function BulletinPdfViewer({
     );
   }
 
+  const useLiveScale = Math.abs(liveScale - 1) > 0.001;
+
   return (
     <div className="flex min-h-0 flex-1 flex-col bg-neutral-100 dark:bg-neutral-950">
       <div className="flex shrink-0 items-center justify-center gap-2 border-b border-neutral-200 px-2 py-1.5 dark:border-neutral-800">
         <button
           type="button"
-          onClick={zoomOut}
+          onClick={bumpZoom(-0.25)}
           className="rounded px-2.5 py-1 text-base text-neutral-600 hover:bg-neutral-200 dark:text-neutral-300 dark:hover:bg-neutral-800"
           aria-label="축소"
         >
@@ -343,7 +401,7 @@ export function BulletinPdfViewer({
         </button>
         <button
           type="button"
-          onClick={zoomIn}
+          onClick={bumpZoom(0.25)}
           className="rounded px-2.5 py-1 text-base text-neutral-600 hover:bg-neutral-200 dark:text-neutral-300 dark:hover:bg-neutral-800"
           aria-label="확대"
         >
@@ -374,10 +432,10 @@ export function BulletinPdfViewer({
         <div
           className="inline-block p-1 sm:p-2"
           style={
-            pinchScale !== 1 && layoutSize.w > 0
+            useLiveScale && layoutSize.w > 0
               ? {
-                  width: Math.ceil(layoutSize.w * pinchScale),
-                  height: Math.ceil(layoutSize.h * pinchScale),
+                  width: Math.ceil(layoutSize.w * liveScale),
+                  height: Math.ceil(layoutSize.h * liveScale),
                 }
               : undefined
           }
@@ -386,9 +444,9 @@ export function BulletinPdfViewer({
             ref={contentRef}
             className="inline-block origin-top-left"
             style={
-              pinchScale !== 1
+              useLiveScale
                 ? {
-                    transform: `scale(${pinchScale})`,
+                    transform: `scale(${liveScale})`,
                     transformOrigin: "top left",
                     width: layoutSize.w > 0 ? layoutSize.w : undefined,
                   }
@@ -398,7 +456,7 @@ export function BulletinPdfViewer({
             {pdfDoc &&
               Array.from({ length: numPages }, (_, i) => (
                 <PdfPageCanvas
-                  key={`${src}-page-${i + 1}-z${zoom.toFixed(2)}-v${viewportTick}`}
+                  key={`${src}-page-${i + 1}`}
                   pdf={pdfDoc}
                   pageNumber={i + 1}
                   scale={renderScale}
