@@ -2,7 +2,21 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
-import { BulletinNativePdfViewer } from "@/components/bulletin-native-pdf-viewer";
+
+const BulletinNativePdfViewer = dynamic(
+  () =>
+    import("@/components/bulletin-native-pdf-viewer").then(
+      (m) => m.BulletinNativePdfViewer
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex flex-1 items-center justify-center bg-neutral-100 text-sm text-neutral-500 dark:bg-neutral-950">
+        선거공보 불러오는 중…
+      </div>
+    ),
+  }
+);
 
 const BulletinPdfViewer = dynamic(
   () =>
