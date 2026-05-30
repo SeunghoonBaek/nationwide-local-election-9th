@@ -197,12 +197,11 @@ export function BulletinViewerModal({
           className="absolute bottom-0 left-0 right-4 h-1.5 cursor-ns-resize touch-none"
         />
         {/* Corner grip */}
-        <div
-          role="separator"
-          aria-orientation="both"
+        <button
+          type="button"
           aria-label="창 크기 조절"
           onPointerDown={(e) => startResize(e, "both")}
-          className="absolute bottom-0 right-0 z-10 flex h-5 w-5 cursor-se-resize touch-none items-end justify-end p-0.5 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+          className="absolute bottom-0 right-0 z-10 flex h-5 w-5 cursor-se-resize touch-none items-end justify-end border-0 bg-transparent p-0.5 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
         >
           <svg
             width="12"
@@ -213,7 +212,7 @@ export function BulletinViewerModal({
           >
             <path d="M12 12H10V10H12V12ZM12 8H10V6H12V8ZM8 12H6V10H8V12ZM12 4H10V2H12V4Z" />
           </svg>
-        </div>
+        </button>
       </div>
     </div>
   );
