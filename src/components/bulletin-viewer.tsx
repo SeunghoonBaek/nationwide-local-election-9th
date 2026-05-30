@@ -1,6 +1,20 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
+
+const BulletinPdfViewer = dynamic(
+  () =>
+    import("@/components/bulletin-pdf-viewer").then((m) => m.BulletinPdfViewer),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex flex-1 items-center justify-center bg-neutral-100 text-sm text-neutral-500 dark:bg-neutral-950">
+        선거공보 불러오는 중…
+      </div>
+    ),
+  }
+);
 
 export function bulletinViewerSrc(bulletinPath: string): string {
   return `/api/bulletin?path=${encodeURIComponent(bulletinPath)}`;
@@ -29,6 +43,10 @@ function clampSize(w: number, h: number) {
 
 function defaultSize() {
   if (typeof window === "undefined") return PRESETS.md;
+  const isMobile = window.innerWidth < 640;
+  if (isMobile) {
+    return clampSize(window.innerWidth - 8, window.innerHeight - 8);
+  }
   return clampSize(
     Math.min(PRESETS.lg.w, window.innerWidth - PAD),
     Math.min(Math.round(window.innerHeight * 0.85), 820)
@@ -110,7 +128,7 @@ export function BulletinViewerModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-3 md:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="bulletin-viewer-title"
@@ -122,7 +140,7 @@ export function BulletinViewerModal({
         onClick={onClose}
       />
       <div
-        className="relative flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-2xl dark:border-neutral-700 dark:bg-neutral-900"
+        className="relative flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-2xl sm:rounded-xl dark:border-neutral-700 dark:bg-neutral-900"
         style={{ width: size.w, height: size.h }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -175,33 +193,27 @@ export function BulletinViewerModal({
             </button>
           </div>
         </div>
-        <iframe
-          src={src}
-          title={title}
-          className="min-h-0 flex-1 border-0 bg-neutral-100 dark:bg-neutral-950"
-        />
-        {/* Right edge */}
+        <BulletinPdfViewer src={src} title={title} />
+        {/* Desktop resize handles */}
         <div
           role="separator"
           aria-orientation="vertical"
           aria-label="가로 크기 조절"
           onPointerDown={(e) => startResize(e, "x")}
-          className="absolute bottom-4 right-0 top-10 w-1.5 cursor-ew-resize touch-none"
+          className="absolute bottom-4 right-0 top-10 hidden w-1.5 cursor-ew-resize touch-none sm:block"
         />
-        {/* Bottom edge */}
         <div
           role="separator"
           aria-orientation="horizontal"
           aria-label="세로 크기 조절"
           onPointerDown={(e) => startResize(e, "y")}
-          className="absolute bottom-0 left-0 right-4 h-1.5 cursor-ns-resize touch-none"
+          className="absolute bottom-0 left-0 right-4 hidden h-1.5 cursor-ns-resize touch-none sm:block"
         />
-        {/* Corner grip */}
         <button
           type="button"
           aria-label="창 크기 조절"
           onPointerDown={(e) => startResize(e, "both")}
-          className="absolute bottom-0 right-0 z-10 flex h-5 w-5 cursor-se-resize touch-none items-end justify-end border-0 bg-transparent p-0.5 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+          className="absolute bottom-0 right-0 z-10 hidden h-5 w-5 cursor-se-resize touch-none items-end justify-end border-0 bg-transparent p-0.5 text-neutral-400 hover:text-neutral-600 sm:flex dark:hover:text-neutral-300"
         >
           <svg
             width="12"
