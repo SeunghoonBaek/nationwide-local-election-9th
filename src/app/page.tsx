@@ -9,6 +9,8 @@ import {
   TYPES_SIDO_WIDE,
   type SgTypeCode,
 } from "@/lib/constants";
+import { matchGusigunToElectionList } from "@/lib/gusigun-names";
+import { ThemeToggle } from "@/components/theme-toggle";
 import type { CandidateView } from "./api/candidates/route";
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -40,6 +42,7 @@ export default function Home() {
   const [addressInput, setAddressInput] = useState("");
   const [locating, setLocating] = useState(false);
   const [locationHint, setLocationHint] = useState<string | null>(null);
+  const [locationGusigun, setLocationGusigun] = useState("");
 
   const sidoWide = sgType !== "" && TYPES_SIDO_WIDE.includes(sgType);
 
@@ -58,15 +61,28 @@ export default function Home() {
 
   // Load districts (gu/si/gun) when province or election type changes
   useEffect(() => {
-    setGusigun("");
     setGusigunList([]);
-    if (!sido || !sgType || sidoWide) return;
+    if (!sido || !sgType || sidoWide) {
+      if (!locationGusigun) setGusigun("");
+      return;
+    }
     const q = new URLSearchParams({ sgType, sido }).toString();
     fetchJson<{ gusigun: string[] }>(`/api/gusigun?${q}`)
-      .then((d) => setGusigunList(d.gusigun))
+      .then((d) => {
+        setGusigunList(d.gusigun);
+        if (locationGusigun) {
+          const matched = matchGusigunToElectionList(
+            locationGusigun,
+            d.gusigun
+          );
+          setGusigun(matched ?? "");
+        } else {
+          setGusigun("");
+        }
+      })
       .catch(handleError);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sido, sgType, sidoWide]);
+  }, [sido, sgType, sidoWide, locationGusigun]);
 
   // Load electoral districts when election type / province / district changes
   useEffect(() => {
@@ -119,16 +135,20 @@ export default function Home() {
     [sgType, sido, sgg, handleError]
   );
 
-  const applySidoFromLocation = useCallback(
-    (resolvedSido: string, label?: string) => {
-      setSido(resolvedSido);
+  const applyLocationFromLookup = useCallback(
+    (resolved: { sido: string; gusigun?: string; label?: string }) => {
+      setSido(resolved.sido);
+      setLocationGusigun(resolved.gusigun ?? "");
+      const regionLabel = resolved.gusigun
+        ? `${resolved.sido} · ${resolved.gusigun}`
+        : resolved.sido;
       setLocationHint(
-        label
-          ? `${resolvedSido} (「${label.length > 40 ? `${label.slice(0, 40)}…` : label}」)`
-          : resolvedSido
+        resolved.label
+          ? `${regionLabel} (「${resolved.label.length > 36 ? `${resolved.label.slice(0, 36)}…` : resolved.label}」)`
+          : regionLabel
       );
       if (sgType && TYPES_SIDO_WIDE.includes(sgType)) {
-        setSgg(resolvedSido);
+        setSgg(resolved.sido);
       }
     },
     [sgType]
@@ -145,15 +165,16 @@ export default function Home() {
     try {
       const data = await fetchJson<{
         sido: string;
+        gusigun?: string;
         label?: string;
       }>(`/api/location?${new URLSearchParams({ address: q })}`);
-      applySidoFromLocation(data.sido, data.label ?? q);
+      applyLocationFromLookup(data);
     } catch (e) {
       handleError(e);
     } finally {
       setLocating(false);
     }
-  }, [addressInput, applySidoFromLocation, handleError]);
+  }, [addressInput, applyLocationFromLookup, handleError]);
 
   const resolveByGps = useCallback(() => {
     if (!navigator.geolocation) {
@@ -168,6 +189,7 @@ export default function Home() {
           const { latitude: lat, longitude: lng } = pos.coords;
           const data = await fetchJson<{
             sido: string;
+            gusigun?: string;
             label?: string;
           }>(
             `/api/location?${new URLSearchParams({
@@ -175,7 +197,7 @@ export default function Home() {
               lng: String(lng),
             })}`
           );
-          applySidoFromLocation(data.sido, data.label);
+          applyLocationFromLookup(data);
         } catch (e) {
           handleError(e);
         } finally {
@@ -192,7 +214,7 @@ export default function Home() {
       },
       { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
     );
-  }, [applySidoFromLocation, handleError]);
+  }, [applyLocationFromLookup, handleError]);
 
   const searchSidoWide = useCallback(
     (type: "3" | "11") => {
@@ -211,14 +233,21 @@ export default function Home() {
     <main className="flex min-h-full flex-1 flex-col">
       <div className="mx-auto flex w-full max-w-[1920px] flex-1 flex-col px-3 py-4 sm:px-5 sm:py-6 lg:px-8 lg:py-8 xl:px-10">
       <header className="mb-6 shrink-0 lg:mb-8">
-        <p className="text-xs font-medium text-blue-600 sm:text-sm">{SG_DATE} 투표</p>
-        <h1 className="mt-1 text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl">
-          제9회 전국동시지방선거 후보자·공약 비교
-        </h1>
-        <p className="mt-2 text-xs text-neutral-500 sm:text-sm">
-          거주 지역과 선거를 선택하면 후보자의 소속·공약·특징·논란 정보를 표로
-          확인할 수 있습니다.
-        </p>
+        <div className="flex items-start justify-between gap-3 sm:gap-4">
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-medium text-blue-600 sm:text-sm">
+              {SG_DATE} 투표
+            </p>
+            <h1 className="mt-1 text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl">
+              제9회 전국동시지방선거 후보자·공약 비교
+            </h1>
+            <p className="mt-2 text-xs text-neutral-500 sm:text-sm">
+              거주 지역과 선거를 선택하면 후보자의 소속·공약·특징·논란 정보를 표로
+              확인할 수 있습니다.
+            </p>
+          </div>
+          <ThemeToggle />
+        </div>
       </header>
 
       {keyMissing && (
@@ -233,14 +262,15 @@ export default function Home() {
         </div>
       )}
 
-      {/* 시·도지사·교육감: 주소 / GPS */}
+      {/* 주소 / GPS → 시·도·구·시·군 */}
       <section className="mb-4 shrink-0 rounded-xl border border-blue-200 bg-blue-50/50 p-4 sm:p-5 dark:border-blue-900/50 dark:bg-blue-950/20">
         <h2 className="text-sm font-semibold text-neutral-800 dark:text-neutral-100">
-          시·도지사·교육감 — 내 지역 찾기
+          내 지역 찾기
         </h2>
         <p className="mt-1 text-xs text-neutral-500">
-          주소 또는 현재 위치로 시·도를 자동 설정한 뒤, 아래 버튼으로 후보를
-          바로 조회할 수 있습니다.
+          주소 또는 현재 위치로 시·도·구·시·군을 자동 설정합니다. 시·도지사·교육감은
+          아래 버튼으로 바로 조회할 수 있고, 다른 선거는 선거 종류·선거구를 고른 뒤
+          조회하세요.
         </p>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-stretch">
           <input
@@ -275,7 +305,20 @@ export default function Home() {
         </div>
         {locationHint && (
           <p className="mt-2 text-xs text-blue-800 dark:text-blue-300">
-            설정된 시·도: <span className="font-semibold">{locationHint}</span>
+            설정된 지역: <span className="font-semibold">{locationHint}</span>
+            {locationGusigun && !sgType && (
+              <span className="text-neutral-500">
+                {" "}
+                · 선거 종류를 선택하면 구·시·군 드롭다운에 반영됩니다.
+              </span>
+            )}
+            {locationGusigun && sgType && sidoWide && (
+              <span className="text-neutral-500">
+                {" "}
+                · 교육감·시·도지사는 시·도만 사용합니다. 구·시·군은 다른
+                선거 종류 선택 시 자동 적용됩니다.
+              </span>
+            )}
           </p>
         )}
         <div className="mt-3 flex flex-wrap gap-2">
@@ -303,7 +346,11 @@ export default function Home() {
         <Field label="시·도">
           <Select
             value={sido}
-            onChange={setSido}
+            onChange={(v) => {
+              setLocationGusigun("");
+              setLocationHint(null);
+              setSido(v);
+            }}
             placeholder={sidoList.length ? "시·도 선택" : "불러오는 중…"}
             options={sidoList}
             disabled={!sidoList.length}
@@ -323,14 +370,41 @@ export default function Home() {
           />
         </Field>
 
-        <Field label="구·시·군">
-          <Select
-            value={gusigun}
-            onChange={setGusigun}
-            placeholder={sidoWide ? "해당 없음" : "구·시·군 선택"}
-            options={gusigunList}
-            disabled={sidoWide || !sgType || !gusigunList.length}
-          />
+        <Field
+          label="구·시·군"
+          hint={
+            sidoWide && locationGusigun
+              ? "시·도지사·교육감 선거에는 구·시·군 선택이 필요 없습니다."
+              : !sidoWide &&
+                  sgType &&
+                  locationGusigun &&
+                  gusigunList.length > 0 &&
+                  !gusigun
+                ? "인식한 구·시·군을 이 선거 종류 목록에서 찾지 못했습니다. 직접 선택해 주세요."
+                : undefined
+          }
+        >
+          {sidoWide ? (
+            <ReadonlyValue
+              value={
+                locationGusigun ||
+                "해당 없음 (시·도지사·교육감은 시·도 단위)"
+              }
+              muted={!locationGusigun}
+            />
+          ) : (
+            <Select
+              value={gusigun}
+              onChange={setGusigun}
+              placeholder={
+                locationGusigun && !gusigunList.length
+                  ? "불러오는 중…"
+                  : "구·시·군 선택"
+              }
+              options={gusigunList}
+              disabled={!sgType || !gusigunList.length}
+            />
+          )}
         </Field>
 
         <Field label="선거구">
@@ -734,12 +808,43 @@ function CandidatePhoto({
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
   return (
     <label className="flex flex-col gap-1.5">
       <span className="text-xs font-medium text-neutral-500">{label}</span>
       {children}
+      {hint && (
+        <span className="text-xs leading-relaxed text-neutral-400">{hint}</span>
+      )}
     </label>
+  );
+}
+
+function ReadonlyValue({
+  value,
+  muted = false,
+}: {
+  value: string;
+  muted?: boolean;
+}) {
+  return (
+    <div
+      className={`w-full rounded-lg border px-3 py-2 text-sm ${
+        muted
+          ? "border-neutral-200 bg-neutral-50 text-neutral-400 dark:border-neutral-800 dark:bg-neutral-900/60"
+          : "border-blue-200 bg-blue-50/80 font-medium text-blue-900 dark:border-blue-900/50 dark:bg-blue-950/30 dark:text-blue-200"
+      }`}
+    >
+      {value}
+    </div>
   );
 }
 

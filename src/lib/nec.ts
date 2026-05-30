@@ -200,6 +200,21 @@ export async function getSidoList(): Promise<string[]> {
 }
 
 /**
+ * Complete administrative 구·시·군 list for a province (from gu/si/gun code list).
+ * Used for address/GPS → region resolution; names match type 5/6 wiwName labels.
+ */
+export async function getAdminGusigunList(sido: string): Promise<string[]> {
+  const items = await callNec("CommonCodeService", "getCommonGusigunCodeList", {});
+  const set = new Set<string>();
+  for (const it of items) {
+    if (str(it.sdName) !== sido) continue;
+    const name = str(it.wiwName);
+    if (name) set.add(name);
+  }
+  return [...set].sort((a, b) => a.localeCompare(b, "ko"));
+}
+
+/**
  * List of districts (gu/si/gun) for a given election type within a province.
  * Derived from the election type's own electoral-district code list (via wiwName)
  * so it stays consistent with getSggList.

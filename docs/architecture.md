@@ -68,6 +68,8 @@ District and electoral-district dropdowns share the same NEC code list (`wiwName
 - `GET /api/location?address=…` — heuristic parse of the address prefix (no third-party key).
 - `GET /api/location?lat=&lng=` — reverse geocode via Nominatim (server-side `User-Agent`).
 - `src/lib/sido-names.ts` normalizes aliases (e.g. `서울` → `서울특별시`) against the NEC sido list.
+- `src/lib/gusigun-names.ts` maps address/geocoder output to NEC admin `wiwName` (e.g. `수원시 장안구` → `수원시장안구`) via `getAdminGusigunList`.
+- When the user picks an election type, `matchGusigunToElectionList` aligns the admin label with that type’s dropdown (type 4 may list one gu per split city).
 - UI quick actions set `sgType` 3 or 11 and `sgg = sido` (province-wide races).
 
 ## UI layout

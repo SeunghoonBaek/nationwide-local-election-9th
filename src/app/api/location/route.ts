@@ -3,8 +3,36 @@ import {
   resolveLocationFromAddress,
   resolveLocationFromCoords,
 } from "@/lib/geocode";
-import { getSidoList } from "@/lib/nec";
+import { getAdminGusigunList, getSidoList } from "@/lib/nec";
 import { resolveSidoName } from "@/lib/sido-names";
+
+async function finalizeLocation(
+  found: { sido: string; gusigun?: string; source: "heuristic" | "nominatim"; label?: string },
+  allowedSido: string[]
+) {
+  const sido = resolveSidoName(found.sido, allowedSido) ?? found.sido;
+  if (!allowedSido.includes(sido)) {
+    return NextResponse.json(
+      { error: `인식한 지역(${sido})이 선거 코드 목록과 일치하지 않습니다.` },
+      { status: 404 }
+    );
+  }
+
+  let gusigun = found.gusigun;
+  if (gusigun) {
+    const adminList = await getAdminGusigunList(sido);
+    if (!adminList.includes(gusigun)) {
+      gusigun = undefined;
+    }
+  }
+
+  return NextResponse.json({
+    sido,
+    gusigun,
+    source: found.source,
+    label: found.label,
+  });
+}
 
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
@@ -13,31 +41,24 @@ export async function GET(req: NextRequest) {
   const lngRaw = sp.get("lng");
 
   try {
-    const allowed = await getSidoList();
+    const allowedSido = await getSidoList();
 
     if (address) {
-      const found = resolveLocationFromAddress(address);
+      const sidoGuess = resolveSidoName(address, allowedSido);
+      const adminList = sidoGuess
+        ? await getAdminGusigunList(sidoGuess)
+        : [];
+      const found = resolveLocationFromAddress(address, adminList);
       if (!found) {
         return NextResponse.json(
           {
             error:
-              "주소에서 시·도를 찾지 못했습니다. 예: 서울특별시 중구 …, 경기도 수원시 …",
+              "주소에서 시·도를 찾지 못했습니다. 예: 서울특별시 중구 …, 경기도 수원시 영통구 …",
           },
           { status: 404 }
         );
       }
-      const sido = resolveSidoName(found.sido, allowed) ?? found.sido;
-      if (!allowed.includes(sido)) {
-        return NextResponse.json(
-          { error: `인식한 지역(${sido})이 선거 코드 목록과 일치하지 않습니다.` },
-          { status: 404 }
-        );
-      }
-      return NextResponse.json({
-        sido,
-        source: found.source,
-        label: found.label,
-      });
+      return finalizeLocation(found, allowedSido);
     }
 
     if (latRaw != null && lngRaw != null) {
@@ -49,28 +70,18 @@ export async function GET(req: NextRequest) {
           { status: 400 }
         );
       }
+
       const found = await resolveLocationFromCoords(lat, lng);
       if (!found) {
         return NextResponse.json(
           {
             error:
-              "좌표로 시·도를 확인하지 못했습니다. 주소로 다시 시도해 주세요.",
+              "좌표로 지역을 확인하지 못했습니다. 주소로 다시 시도해 주세요.",
           },
           { status: 404 }
         );
       }
-      const sido = resolveSidoName(found.sido, allowed) ?? found.sido;
-      if (!allowed.includes(sido)) {
-        return NextResponse.json(
-          { error: `인식한 지역(${sido})이 선거 코드 목록과 일치하지 않습니다.` },
-          { status: 404 }
-        );
-      }
-      return NextResponse.json({
-        sido,
-        source: found.source,
-        label: found.label,
-      });
+      return finalizeLocation(found, allowedSido);
     }
 
     return NextResponse.json(

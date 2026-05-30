@@ -27,7 +27,7 @@ make dev       # start dev server at http://localhost:3000
 
 In the app: Province -> Election type -> (District) -> Electoral district, then "후보자 조회".
 
-For **시·도지사** and **교육감**, use **「시·도지사·교육감 — 내 지역 찾기」**: enter an address or tap **현재 위치** to set your province, then **시·도지사 후보 조회** / **교육감 후보 조회** (no extra API key; GPS uses OpenStreetMap Nominatim server-side).
+For **시·도지사** and **교육감**, use **「내 지역 찾기」**: enter an address or tap **현재 위치** to set your **시·도·구·시·군**, then **시·도지사 후보 조회** / **교육감 후보 조회** (no extra API key; GPS uses OpenStreetMap Nominatim server-side). For other election types, pick **선거 종류** and **선거구** after location lookup.
 
 > Candidate/pledge data appears in the API only after candidate registration closes (about two weeks before election day).
 
