@@ -12,6 +12,8 @@ if (typeof window !== "undefined") {
   GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.mjs`;
 }
 
+const PDFJS_ASSETS = `https://unpkg.com/pdfjs-dist@${version}`;
+
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 4;
 /** Retina phones often use 3x; cap to limit memory on extreme zoom. */
@@ -158,7 +160,12 @@ export function BulletinPdfViewer({
 
     (async () => {
       try {
-        const pdf = await getDocument(src).promise;
+        const pdf = await getDocument({
+          url: src,
+          cMapUrl: `${PDFJS_ASSETS}/cmaps/`,
+          cMapPacked: true,
+          standardFontDataUrl: `${PDFJS_ASSETS}/standard_fonts/`,
+        }).promise;
         if (cancelled) {
           pdf.destroy();
           return;
@@ -345,11 +352,11 @@ export function BulletinPdfViewer({
         {numPages > 1 && (
           <span className="text-[10px] text-neutral-400">{numPages}쪽</span>
         )}
-        <span className="hidden text-[10px] text-neutral-400 sm:inline">
-          좌우·상하 스크롤 · 핀치 확대/축소
+        <span className="hidden text-[10px] text-amber-600/90 sm:inline">
+          확대·스크롤 모드 — 일부 포스터는 그림자·투명 효과가 어긋날 수 있음
         </span>
-        <span className="text-[10px] text-neutral-400 sm:hidden">
-          스크롤 · 핀치 확대/축소
+        <span className="text-[10px] text-amber-600/90 sm:hidden">
+          그림자·투명 효과가 어긋날 수 있음
         </span>
       </div>
       <div
