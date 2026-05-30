@@ -103,13 +103,14 @@ export default function Home() {
   const canSearch = Boolean(sgType && sido && sgg);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
-      <header className="mb-8">
-        <p className="text-sm font-medium text-blue-600">{SG_DATE} 투표</p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
+    <main className="flex min-h-full flex-1 flex-col">
+      <div className="mx-auto flex w-full max-w-[1920px] flex-1 flex-col px-3 py-4 sm:px-5 sm:py-6 lg:px-8 lg:py-8 xl:px-10">
+      <header className="mb-6 shrink-0 lg:mb-8">
+        <p className="text-xs font-medium text-blue-600 sm:text-sm">{SG_DATE} 투표</p>
+        <h1 className="mt-1 text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl">
           제9회 전국동시지방선거 후보자·공약 비교
         </h1>
-        <p className="mt-2 text-sm text-neutral-500">
+        <p className="mt-2 text-xs text-neutral-500 sm:text-sm">
           거주 지역과 선거를 선택하면 후보자의 소속·공약·특징·논란 정보를 표로
           확인할 수 있습니다.
         </p>
@@ -128,7 +129,7 @@ export default function Home() {
       )}
 
       {/* 선택 영역 */}
-      <section className="grid grid-cols-1 gap-4 rounded-xl border border-neutral-200 bg-white/60 p-5 sm:grid-cols-2 lg:grid-cols-4 dark:border-neutral-800 dark:bg-neutral-900/40">
+      <section className="grid shrink-0 grid-cols-1 gap-3 rounded-xl border border-neutral-200 bg-white/60 p-4 sm:grid-cols-2 sm:gap-4 sm:p-5 lg:grid-cols-4 dark:border-neutral-800 dark:bg-neutral-900/40">
         <Field label="시·도">
           <Select
             value={sido}
@@ -176,7 +177,7 @@ export default function Home() {
           <button
             onClick={search}
             disabled={!canSearch || loading}
-            className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
           >
             {loading ? "조회 중…" : "후보자 조회"}
           </button>
@@ -191,42 +192,56 @@ export default function Home() {
 
       {/* 결과 */}
       {candidates && (
-        <section className="mt-8">
+        <section className="mt-6 min-w-0 flex-1 lg:mt-8">
           {candidates.length === 0 ? (
             <p className="rounded-lg border border-neutral-200 bg-neutral-50 p-6 text-center text-sm text-neutral-500">
               해당 선거구의 후보자 정보가 아직 없습니다. (후보자 등록 이후 제공)
             </p>
           ) : (
             <>
-              <p className="mb-3 text-sm text-neutral-500">
+              <p className="mb-3 text-xs text-neutral-500 sm:text-sm">
                 <span className="font-semibold text-neutral-700 dark:text-neutral-200">
                   {sido} {sgg}
                 </span>{" "}
                 · {sgType && SG_TYPES[sgType]} · 후보자 {candidates.length}명
               </p>
-              <CandidateTable candidates={candidates} />
+              <div className="lg:hidden">
+                <CandidateCards candidates={candidates} />
+              </div>
+              <div className="hidden lg:block">
+                <CandidateTable candidates={candidates} />
+              </div>
             </>
           )}
         </section>
       )}
 
       <Footer />
-    </div>
+      </div>
+    </main>
   );
 }
 
 function CandidateTable({ candidates }: { candidates: CandidateView[] }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-neutral-200 dark:border-neutral-800">
-      <table className="min-w-full divide-y divide-neutral-200 text-sm dark:divide-neutral-800">
+      <table className="w-full table-fixed divide-y divide-neutral-200 text-sm dark:divide-neutral-800">
+        <colgroup>
+          <col className="w-[4%]" />
+          <col className="w-[14%]" />
+          <col className="w-[10%]" />
+          <col className="w-[22%]" />
+          <col className="w-[28%]" />
+          <col className="w-[22%]" />
+        </colgroup>
         <thead className="bg-neutral-50 text-left text-xs uppercase tracking-wide text-neutral-500 dark:bg-neutral-900">
           <tr>
-            <Th className="w-12">기호</Th>
+            <Th>기호</Th>
             <Th>후보자</Th>
             <Th>소속(정당)</Th>
-            <Th className="min-w-[220px]">특징 (경력·직업·학력)</Th>
-            <Th className="min-w-[280px]">주요 공약</Th>
-            <Th className="min-w-[220px]">논란·이슈</Th>
+            <Th>특징 (경력·직업·학력)</Th>
+            <Th>주요 공약</Th>
+            <Th>논란·이슈</Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800/60">
@@ -239,99 +254,19 @@ function CandidateTable({ candidates }: { candidates: CandidateView[] }) {
                 )}
               </Td>
               <Td>
-                <div className="flex items-start gap-3">
-                  <CandidatePhoto candidate={c} />
-                  <div>
-                    <div className="font-semibold">{c.name}</div>
-                    <div className="mt-0.5 text-xs text-neutral-500">
-                      {[c.gender, c.age && `${c.age}세`].filter(Boolean).join(" · ")}
-                    </div>
-                    {c.status && c.status !== "등록" && (
-                      <span className="mt-1 inline-block rounded bg-red-100 px-1.5 py-0.5 text-xs text-red-700">
-                        {c.status}
-                      </span>
-                    )}
-                  </div>
-                </div>
+                <CandidateIdentity candidate={c} compact />
               </Td>
               <Td>
-                <span className="inline-block rounded-md bg-blue-50 px-2 py-1 font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-                  {c.party || "무소속"}
-                </span>
+                <PartyBadge party={c.party} />
               </Td>
               <Td>
-                <ul className="space-y-1 text-neutral-700 dark:text-neutral-300">
-                  {c.job && <li>· 직업: {c.job}</li>}
-                  {c.edu && <li>· 학력: {c.edu}</li>}
-                  {c.career1 && <li>· {c.career1}</li>}
-                  {c.career2 && <li>· {c.career2}</li>}
-                  {c.tags.length > 0 && (
-                    <li className="flex flex-wrap gap-1 pt-1">
-                      {c.tags.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </li>
-                  )}
-                </ul>
+                <CandidateTraits candidate={c} />
               </Td>
               <Td>
-                {c.pledges.length === 0 ? (
-                  <span className="text-neutral-400">등록된 공약 없음</span>
-                ) : (
-                  <ol className="space-y-1.5">
-                    {c.pledges.slice(0, 10).map((p, i) => (
-                      <li key={i}>
-                        {p.realm && (
-                          <span className="mr-1 rounded bg-emerald-50 px-1.5 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-                            {p.realm}
-                          </span>
-                        )}
-                        <span className="font-medium">{p.title}</span>
-                        {p.content && (
-                          <p className="mt-0.5 text-xs text-neutral-500">
-                            {p.content}
-                          </p>
-                        )}
-                      </li>
-                    ))}
-                  </ol>
-                )}
+                <CandidatePledges candidate={c} />
               </Td>
               <Td>
-                {c.controversies.length === 0 ? (
-                  <span className="text-neutral-400">등록된 항목 없음</span>
-                ) : (
-                  <ul className="space-y-2">
-                    {c.controversies.map((ct, i) => (
-                      <li key={i}>
-                        <p className="text-neutral-700 dark:text-neutral-300">
-                          {ct.summary}
-                        </p>
-                        <p className="mt-0.5 text-xs text-neutral-400">
-                          {ct.date}
-                          {ct.source && (
-                            <>
-                              {" · "}
-                              <a
-                                href={ct.source}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-blue-600 underline"
-                              >
-                                {ct.sourceName ?? "출처"}
-                              </a>
-                            </>
-                          )}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <CandidateControversies candidate={c} />
               </Td>
             </tr>
           ))}
@@ -341,13 +276,205 @@ function CandidateTable({ candidates }: { candidates: CandidateView[] }) {
   );
 }
 
-function CandidatePhoto({ candidate }: { candidate: CandidateView }) {
+function CandidateCards({ candidates }: { candidates: CandidateView[] }) {
+  return (
+    <ul className="space-y-4">
+      {candidates.map((c) => (
+        <li
+          key={c.cnddtId || c.name}
+          className="rounded-xl border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900/40"
+        >
+          <div className="flex items-start gap-3">
+            <div className="flex shrink-0 flex-col items-center gap-1">
+              <span className="text-xl font-bold leading-none">{c.giho}</span>
+              {c.gihoSangse && (
+                <span className="text-xs text-neutral-400">{c.gihoSangse}</span>
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <CandidateIdentity candidate={c} />
+              <div className="mt-2">
+                <PartyBadge party={c.party} />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 space-y-4 border-t border-neutral-100 pt-4 dark:border-neutral-800">
+            <CardSection title="특징">
+              <CandidateTraits candidate={c} />
+            </CardSection>
+            <CardSection title="주요 공약">
+              <CandidatePledges candidate={c} />
+            </CardSection>
+            <CardSection title="논란·이슈">
+              <CandidateControversies candidate={c} />
+            </CardSection>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function CardSection({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <h3 className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
+
+function CandidateIdentity({
+  candidate,
+  compact = false,
+}: {
+  candidate: CandidateView;
+  compact?: boolean;
+}) {
+  return (
+    <div className={`flex items-start gap-3 ${compact ? "min-w-0" : ""}`}>
+      <CandidatePhoto candidate={candidate} compact={compact} />
+      <div className="min-w-0">
+        <div className="font-semibold">{candidate.name}</div>
+        <div className="mt-0.5 text-xs text-neutral-500">
+          {[candidate.gender, candidate.age && `${candidate.age}세`]
+            .filter(Boolean)
+            .join(" · ")}
+        </div>
+        {candidate.status && candidate.status !== "등록" && (
+          <span className="mt-1 inline-block rounded bg-red-100 px-1.5 py-0.5 text-xs text-red-700">
+            {candidate.status}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function PartyBadge({ party }: { party: string }) {
+  return (
+    <span className="inline-block max-w-full break-words rounded-md bg-blue-50 px-2 py-1 text-sm font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+      {party || "무소속"}
+    </span>
+  );
+}
+
+function CandidateTraits({ candidate }: { candidate: CandidateView }) {
+  const hasContent =
+    candidate.job ||
+    candidate.edu ||
+    candidate.career1 ||
+    candidate.career2 ||
+    candidate.tags.length > 0;
+
+  if (!hasContent) {
+    return <span className="text-neutral-400">등록된 정보 없음</span>;
+  }
+
+  return (
+    <ul className="space-y-1 break-words text-neutral-700 dark:text-neutral-300">
+      {candidate.job && <li>· 직업: {candidate.job}</li>}
+      {candidate.edu && <li>· 학력: {candidate.edu}</li>}
+      {candidate.career1 && <li>· {candidate.career1}</li>}
+      {candidate.career2 && <li>· {candidate.career2}</li>}
+      {candidate.tags.length > 0 && (
+        <li className="flex flex-wrap gap-1 pt-1">
+          {candidate.tags.map((t) => (
+            <span
+              key={t}
+              className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
+            >
+              {t}
+            </span>
+          ))}
+        </li>
+      )}
+    </ul>
+  );
+}
+
+function CandidatePledges({ candidate }: { candidate: CandidateView }) {
+  if (candidate.pledges.length === 0) {
+    return <span className="text-neutral-400">등록된 공약 없음</span>;
+  }
+
+  return (
+    <ol className="space-y-1.5 break-words">
+      {candidate.pledges.slice(0, 10).map((p, i) => (
+        <li key={i}>
+          {p.realm && (
+            <span className="mr-1 rounded bg-emerald-50 px-1.5 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+              {p.realm}
+            </span>
+          )}
+          <span className="font-medium">{p.title}</span>
+          {p.content && (
+            <p className="mt-0.5 text-xs text-neutral-500">{p.content}</p>
+          )}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function CandidateControversies({ candidate }: { candidate: CandidateView }) {
+  if (candidate.controversies.length === 0) {
+    return <span className="text-neutral-400">등록된 항목 없음</span>;
+  }
+
+  return (
+    <ul className="space-y-2 break-words">
+      {candidate.controversies.map((ct, i) => (
+        <li key={i}>
+          <p className="text-neutral-700 dark:text-neutral-300">{ct.summary}</p>
+          <p className="mt-0.5 text-xs text-neutral-400">
+            {ct.date}
+            {ct.source && (
+              <>
+                {" · "}
+                <a
+                  href={ct.source}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  {ct.sourceName ?? "출처"}
+                </a>
+              </>
+            )}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function CandidatePhoto({
+  candidate,
+  compact = false,
+}: {
+  candidate: CandidateView;
+  compact?: boolean;
+}) {
   const [failed, setFailed] = useState(false);
   const photoUrl = candidate.photoUrl;
   const showPhoto = Boolean(photoUrl) && !failed;
 
   return (
-    <div className="relative h-[72px] w-[54px] shrink-0 overflow-hidden rounded-md border border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800">
+    <div
+      className={`relative shrink-0 overflow-hidden rounded-md border border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800 ${
+        compact ? "h-14 w-11 sm:h-16 sm:w-12" : "h-16 w-12 sm:h-[72px] sm:w-[54px]"
+      }`}
+    >
       {showPhoto && photoUrl ? (
         <Image
           src={photoUrl}
@@ -398,7 +525,7 @@ function Select({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
-      className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-400 dark:border-neutral-700 dark:bg-neutral-900 dark:disabled:bg-neutral-800"
+      className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-400 dark:border-neutral-700 dark:bg-neutral-900 dark:disabled:bg-neutral-800"
     >
       <option value="">{placeholder}</option>
       {options.map((o) => {
@@ -415,16 +542,20 @@ function Select({
 }
 
 function Th({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <th className={`px-4 py-3 font-semibold ${className}`}>{children}</th>;
+  return (
+    <th className={`px-3 py-3 font-semibold xl:px-4 ${className}`}>{children}</th>
+  );
 }
 
 function Td({ children }: { children: React.ReactNode }) {
-  return <td className="px-4 py-3">{children}</td>;
+  return (
+    <td className="break-words px-3 py-3 xl:px-4">{children}</td>
+  );
 }
 
 function Footer() {
   return (
-    <footer className="mt-12 border-t border-neutral-200 pt-6 text-xs leading-relaxed text-neutral-500 dark:border-neutral-800">
+    <footer className="mt-8 shrink-0 border-t border-neutral-200 pt-5 text-xs leading-relaxed text-neutral-500 dark:border-neutral-800 lg:mt-12 lg:pt-6">
       <p>
         <strong>데이터 출처</strong> · 후보자·공약 정보: 중앙선거관리위원회
         공공데이터포털(data.go.kr) Open API. 공약은 후보자가 직접 등록한

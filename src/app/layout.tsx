@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     "지역을 선택하면 후보자, 소속, 공약, 특징, 논란 정보를 표로 비교합니다. 출처: 중앙선거관리위원회 공공데이터.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
