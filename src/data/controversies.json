@@ -1,17 +1,3029 @@
 {
-  "_comment": "Manually curated 'controversy/trait' data for candidates. This qualitative info is not in the official API, so always record it neutrally with a trustworthy source link. `match` is { sido, sgg, name } with partial matching; `name` is required. The sample item is a format guide only (not a real fact) and must be replaced before use.",
+  "_comment": "Candidate tags (from NEC API careers) and controversy topic index from Namuwiki subpages. Each controversy links to the Namuwiki section as source (collected 2026-05). Verify details on the linked page before citing elsewhere.",
+  "_meta": {
+    "collectedAt": "2026-05-30",
+    "scope": "시·도지사(17) + 교육감(17) + major city mayors (sgType 4)",
+    "sourceNote": "Controversy topics parsed from Namuwiki '비판/논란' subpages; tags from NEC API.",
+    "candidateCount": 206,
+    "withControversies": 33
+  },
   "items": [
     {
-      "match": { "sido": "서울특별시", "sgg": "서울특별시", "name": "예시후보" },
-      "tags": ["3선 도전", "공약 이행률 논쟁"],
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "강원특별자치도",
+        "name": "우상호"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
       "controversies": [
         {
-          "summary": "재임 중 추진한 ○○사업 예산 집행을 두고 시의회와 갈등이 있었다.",
-          "date": "2025-11",
-          "source": "https://example.com/news/123",
-          "sourceName": "○○일보"
+          "summary": "새천년 NHK 사건 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9A%B0%EC%83%81%ED%98%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "농지법 위반 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9A%B0%EC%83%81%ED%98%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "정의기억연대 위안부 피해자 이용 논란 당시 정의연 공개 지지 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9A%B0%EC%83%81%ED%98%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "\"카투사 자체가 편한 군대\" (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9A%B0%EC%83%81%ED%98%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
         }
       ]
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "강원특별자치도",
+        "name": "김진태"
+      },
+      "tags": [
+        "강원특별자치도지사",
+        "국회의원 경력",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "국정감사 도중 일베 접속 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%A7%84%ED%83%9C/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "대선 출마 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%A7%84%ED%83%9C/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "공직선거법 위반 혐의 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%A7%84%ED%83%9C/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "삼둥이 사진 무단 도용 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%A7%84%ED%83%9C/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "강원특별자치도",
+        "name": "강삼영"
+      },
+      "tags": [
+        "강원민주진보교육감단일후보",
+        "현직 단체장",
+        "교육계",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "강원특별자치도",
+        "name": "최광익"
+      },
+      "tags": [
+        "강원미래교육포럼 대표",
+        "현직 단체장",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "강원특별자치도",
+        "name": "신경호"
+      },
+      "tags": [
+        "반전교조연대 단일후보",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "강원특별자치도",
+        "name": "박현숙"
+      },
+      "tags": [
+        "한라대학교 조교수",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "경기도",
+        "name": "추미애"
+      },
+      "tags": [
+        "기업인",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "새천년민주당 시기 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EB%AF%B8%EC%95%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "노무현 대통령 탄핵소추안 찬성 표결 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EB%AF%B8%EC%95%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "주요 의혹 (나무위키 '비판 및 논란/아들 군복무 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EB%AF%B8%EC%95%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80%2F%EC%95%84%EB%93%A4%20%EA%B5%B0%EB%B3%B5%EB%AC%B4%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "휴가 관련 의혹 (나무위키 '비판 및 논란/아들 군복무 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EB%AF%B8%EC%95%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80%2F%EC%95%84%EB%93%A4%20%EA%B5%B0%EB%B3%B5%EB%AC%B4%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "대리 청탁 의혹 (나무위키 '비판 및 논란/아들 군복무 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EB%AF%B8%EC%95%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80%2F%EC%95%84%EB%93%A4%20%EA%B5%B0%EB%B3%B5%EB%AC%B4%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "경기도",
+        "name": "양향자"
+      },
+      "tags": [
+        "국민의힘 최고위원",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "\"반올림, 전문 시위꾼\" 폄하 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%96%91%ED%96%A5%EC%9E%90/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "공동저자 논문 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%96%91%ED%96%A5%EC%9E%90/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "역사왜곡금지법 발의 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%96%91%ED%96%A5%EC%9E%90/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "화성 그린벨트 투기 의혹 (무혐의) (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%96%91%ED%96%A5%EC%9E%90/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "경기도",
+        "name": "조응천"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "대법원 양형위원 성추행 허위 폭로 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A1%B0%EC%9D%91%EC%B2%9C/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "도시 및 주거환경정비법 개정안 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A1%B0%EC%9D%91%EC%B2%9C/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "금연 구역에서의 전자담배 흡연 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A1%B0%EC%9D%91%EC%B2%9C/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "철도산업발전기본법 개정안 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A1%B0%EC%9D%91%EC%B2%9C/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "경기도",
+        "name": "홍성규"
+      },
+      "tags": [
+        "화성노동인권센터 소장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "경기도",
+        "name": "김현욱"
+      },
+      "tags": [
+        "국민연합 당대표",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "경기도",
+        "name": "임태희"
+      },
+      "tags": [
+        "경기도교육감",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "민간인 불법사찰 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9E%84%ED%83%9C%ED%9D%AC/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "불법사찰 구속자 가족에 돈 전달 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9E%84%ED%83%9C%ED%9D%AC/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "학생 비하 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9E%84%ED%83%9C%ED%9D%AC/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "노벨문학상 수상자 한강 작가의 소설, 졸업 후 읽어라 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9E%84%ED%83%9C%ED%9D%AC/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "경기도",
+        "name": "안민석"
+      },
+      "tags": [
+        "경기도교육감 민주진보 단일후보",
+        "국회의원 경력",
+        "5선",
+        "현직 단체장",
+        "교육계"
+      ],
+      "controversies": [
+        {
+          "summary": "박근혜-최순실 게이트 관련 활동 및 관련 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%95%88%EB%AF%BC%EC%84%9D/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "최순실 특혜 연예인 유포 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%95%88%EB%AF%BC%EC%84%9D/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "신주평 공익근무요원 복무 거짓사실 유포 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%95%88%EB%AF%BC%EC%84%9D/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "정유라 체포 소스제공 허언 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%95%88%EB%AF%BC%EC%84%9D/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "경상남도",
+        "name": "김경수"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "국가보안법 위반 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EA%B2%BD%EC%88%98/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "유재수 사건 영향력 행사 정황 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EA%B2%BD%EC%88%98/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "반론 및 법정 증언 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EA%B2%BD%EC%88%98/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "경상남도",
+        "name": "박완수"
+      },
+      "tags": [
+        "경상남도지사",
+        "국회의원 경력",
+        "현직 단체장",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "창원시장 재임 시절 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%EC%99%84%EC%88%98/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "경상남도",
+        "name": "전희영"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "경상남도",
+        "name": "오인태"
+      },
+      "tags": [
+        "오인태 인문학서재 이응 원장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "경상남도",
+        "name": "송영기"
+      },
+      "tags": [
+        "좋은교육감만들기 경남시민연대 선출 민주진보후",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "경상남도",
+        "name": "김준식"
+      },
+      "tags": [
+        "교육대개혁국민운동본부 공동대표",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "경상남도",
+        "name": "권순기"
+      },
+      "tags": [
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "경상북도",
+        "name": "오중기"
+      },
+      "tags": [
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "경상북도",
+        "name": "이철우"
+      },
+      "tags": [
+        "경상북도지사",
+        "국회의원 경력",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "세월호 막말 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9D%B4%EC%B2%A0%EC%9A%B0/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "문재인 대통령 탄핵 암시 발언 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9D%B4%EC%B2%A0%EC%9A%B0/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "'결혼 안 하면 죄' 발언 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9D%B4%EC%B2%A0%EC%9A%B0/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "욕설 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9D%B4%EC%B2%A0%EC%9A%B0/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "경상북도",
+        "name": "김상동"
+      },
+      "tags": [
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "경상북도",
+        "name": "이용기"
+      },
+      "tags": [
+        "경북혁신교육연구소공감 소장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "경상북도",
+        "name": "임종식"
+      },
+      "tags": [
+        "경상북도교육감",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대구광역시",
+        "sgg": "대구광역시",
+        "name": "김부겸"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "남파간첩 이선실 사건 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EB%B6%80%EA%B2%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "영남 정치성향 비판 발언 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EB%B6%80%EA%B2%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "박원순 성추행 사건 '피해호소고소인' 발언 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EB%B6%80%EA%B2%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "안희정 성폭력 사건 이후 모친상 문상 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EB%B6%80%EA%B2%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "대구광역시",
+        "sgg": "대구광역시",
+        "name": "추경호"
+      },
+      "tags": [
+        "기업인",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "론스타 게이트 연루 의혹 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EA%B2%BD%ED%98%B8/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "딸 공공기관 '아빠찬스' 내로남불 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EA%B2%BD%ED%98%B8/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "정치자금으로 월세·관리비 납부 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EA%B2%BD%ED%98%B8/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "주민등록법 위반 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%B6%94%EA%B2%BD%ED%98%B8/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "대구광역시",
+        "sgg": "대구광역시",
+        "name": "이수찬"
+      },
+      "tags": [
+        "개혁신당 대구광역시당위원장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대구광역시",
+        "sgg": "대구광역시",
+        "name": "임성무"
+      },
+      "tags": [
+        "대구민주진보교육포럼 대표",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대구광역시",
+        "sgg": "대구광역시",
+        "name": "강은희"
+      },
+      "tags": [
+        "대구광역시교육감",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대전광역시",
+        "sgg": "대전광역시",
+        "name": "허태정"
+      },
+      "tags": [
+        "교육계"
+      ],
+      "controversies": [
+        {
+          "summary": "석사학위 논문 표절 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%ED%97%88%ED%83%9C%EC%A0%95/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "대전 시티즌 구단주 시절 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%ED%97%88%ED%83%9C%EC%A0%95/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "병역면제 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%ED%97%88%ED%83%9C%EC%A0%95/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "장애인 등급 판정 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%ED%97%88%ED%83%9C%EC%A0%95/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "대전광역시",
+        "sgg": "대전광역시",
+        "name": "이장우"
+      },
+      "tags": [
+        "대전광역시장",
+        "국회의원 경력",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대전광역시",
+        "sgg": "대전광역시",
+        "name": "강희린"
+      },
+      "tags": [
+        "개혁신당 대전광역시당위원장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대전광역시",
+        "sgg": "대전광역시",
+        "name": "정상신"
+      },
+      "tags": [
+        "대전미래교육연구회 회장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대전광역시",
+        "sgg": "대전광역시",
+        "name": "맹수석"
+      },
+      "tags": [
+        "대전광역시교육청소청심사위원회 위원",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대전광역시",
+        "sgg": "대전광역시",
+        "name": "성광진"
+      },
+      "tags": [
+        "대전교육연구소 소장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대전광역시",
+        "sgg": "대전광역시",
+        "name": "오석진"
+      },
+      "tags": [
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "대전광역시",
+        "sgg": "대전광역시",
+        "name": "진동규"
+      },
+      "tags": [
+        "교육계",
+        "기업인"
+      ],
+      "controversies": [
+        {
+          "summary": "발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A7%84%EB%8F%99%EA%B7%9C/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "'나 반대하면 이빨 뽑아 버려야' 발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A7%84%EB%8F%99%EA%B7%9C/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "국민의당 지지자 비하 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A7%84%EB%8F%99%EA%B7%9C/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "부산광역시",
+        "sgg": "부산광역시",
+        "name": "전재수"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "부산광역시",
+        "sgg": "부산광역시",
+        "name": "박형준"
+      },
+      "tags": [
+        "부산광역시장",
+        "현직 단체장",
+        "기업인"
+      ],
+      "controversies": [
+        {
+          "summary": "이명박 관련 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%ED%98%95%EC%A4%80/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "이명박 '마사지걸' 발언 관련 부적절한 해명 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%ED%98%95%EC%A4%80/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "유재중 의원과의 질긴 악연 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%ED%98%95%EC%A4%80/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "총선 지원 리스트 의혹 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%ED%98%95%EC%A4%80/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "부산광역시",
+        "sgg": "부산광역시",
+        "name": "정이한"
+      },
+      "tags": [
+        "개혁신당 중앙당 대변인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "부산광역시",
+        "sgg": "부산광역시",
+        "name": "정승윤"
+      },
+      "tags": [
+        "부산대 법학전문대학원 교수",
+        "교육계"
+      ],
+      "controversies": [
+        {
+          "summary": "오또케 발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A0%95%EC%8A%B9%EC%9C%A4/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "국민권익위원회 부패방지국장 사망 논란 및 허위 자료 제출 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A0%95%EC%8A%B9%EC%9C%A4/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "세이브코리아 참석 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A0%95%EC%8A%B9%EC%9C%A4/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "부산광역시",
+        "sgg": "부산광역시",
+        "name": "김석준"
+      },
+      "tags": [
+        "교육계"
+      ],
+      "controversies": [
+        {
+          "summary": "폴리페서 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%9D%EC%A4%80/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "선거법 위반 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%9D%EC%A4%80/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "진보신당 단일화 불참 방침 위반 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%9D%EC%A4%80/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "학교 비정규직 노동자 강제 전보 및 고소고발 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%9D%EC%A4%80/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "정원오"
+      },
+      "tags": [
+        "교육계",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "집시법 위반 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A0%95%EC%9B%90%EC%98%A4/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "오세훈"
+      },
+      "tags": [
+        "제39대 서울특별시장",
+        "국회의원 경력",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "장애인 생산품 비하 발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%98%A4%EC%84%B8%ED%9B%88/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "박근혜 피습 사건 이후 \"박근혜 대표님 고맙습니다\" 발언 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%98%A4%EC%84%B8%ED%9B%88/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "김정철"
+      },
+      "tags": [
+        "개혁신당 최고위원",
+        "변호사",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "유지혜"
+      },
+      "tags": [
+        "여성의당 대변인",
+        "국회의원 경력",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "이강산"
+      },
+      "tags": [
+        "자유통일당 AI전략위원회 위원장",
+        "현직 단체장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "권영국"
+      },
+      "tags": [
+        "정의당 대표",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "김영배"
+      },
+      "tags": [
+        "예원예술대학교 부총장",
+        "교육계"
+      ],
+      "controversies": [
+        {
+          "summary": "세월호 참사 애도 국면 술자리 논란 (나무위키 '논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%98%81%EB%B0%B0/%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "고려대학교 기숙사 건축허가 반려 논란 (나무위키 '논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%98%81%EB%B0%B0/%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "경선 여론조작 (불기소) (나무위키 '논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%98%81%EB%B0%B0/%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "선거법 개정안 발의 논란 (나무위키 '논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%98%81%EB%B0%B0/%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "한만중"
+      },
+      "tags": [
+        "교육계",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "조전혁"
+      },
+      "tags": [
+        "국회의원 경력"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "이학인"
+      },
+      "tags": [
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "윤호상"
+      },
+      "tags": [
+        "서울좋은교육감후보추대시민회의 보수단일후보",
+        "현직 단체장",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "정근식"
+      },
+      "tags": [
+        "2026서울민주진보교육감단일화 추진위 추대후",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "서울특별시",
+        "sgg": "서울특별시",
+        "name": "류수노"
+      },
+      "tags": [
+        "한성대학교 석좌교수",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "세종특별자치시",
+        "sgg": "세종특별자치시",
+        "name": "조상호"
+      },
+      "tags": [
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "세종특별자치시",
+        "sgg": "세종특별자치시",
+        "name": "최민호"
+      },
+      "tags": [
+        "세종특별자치시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "세종특별자치시",
+        "sgg": "세종특별자치시",
+        "name": "하헌휘"
+      },
+      "tags": [
+        "변호사"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "세종특별자치시",
+        "sgg": "세종특별자치시",
+        "name": "강미애"
+      },
+      "tags": [
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "세종특별자치시",
+        "sgg": "세종특별자치시",
+        "name": "원성수"
+      },
+      "tags": [
+        "총리실 산하 세종특별자치시 지원위원"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "울산광역시",
+        "sgg": "울산광역시",
+        "name": "김상욱"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "울산광역시",
+        "sgg": "울산광역시",
+        "name": "김두겸"
+      },
+      "tags": [
+        "울산광역시장",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "임현철 구의원에 대한 욕설, 폭행 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EB%91%90%EA%B2%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "각종 전시성 랜드마크 건립 추진 시도 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EB%91%90%EA%B2%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "건국전쟁 공무원 강제 동원 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EB%91%90%EA%B2%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "울산 시내버스 개편 강행 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EB%91%90%EA%B2%B8/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "울산광역시",
+        "sgg": "울산광역시",
+        "name": "김종훈"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "울산광역시",
+        "sgg": "울산광역시",
+        "name": "박맹우"
+      },
+      "tags": [
+        "국회의원 경력"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "울산광역시",
+        "sgg": "울산광역시",
+        "name": "구광렬"
+      },
+      "tags": [
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "울산광역시",
+        "sgg": "울산광역시",
+        "name": "김주홍"
+      },
+      "tags": [
+        "울산대학교 명예교수",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "인천광역시",
+        "sgg": "인천광역시",
+        "name": "박찬대"
+      },
+      "tags": [
+        "국회의원 경력",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "조동연 옹호 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%EC%B0%AC%EB%8C%80/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "\"박원순 살아있었다면 이태원 참사 없었을 것\" 글 공유 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%EC%B0%AC%EB%8C%80/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "종합부동산세 발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%EC%B0%AC%EB%8C%80/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "‘나치가 그들을 덮쳤을 때’ 시 낭송 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%95%EC%B0%AC%EB%8C%80/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "인천광역시",
+        "sgg": "인천광역시",
+        "name": "유정복"
+      },
+      "tags": [
+        "인천광역시장",
+        "현직 단체장",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "인천광역시 스마트시티 무산 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A0%EC%A0%95%EB%B3%B5/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "박근혜-최순실 게이트 연관 의혹 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A0%EC%A0%95%EB%B3%B5/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "매립지 조성사업 중단 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A0%EC%A0%95%EB%B3%B5/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "해안포 사격 당시 출판기념회 참석 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A0%EC%A0%95%EB%B3%B5/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "인천광역시",
+        "sgg": "인천광역시",
+        "name": "이기붕"
+      },
+      "tags": [
+        "개혁신당 인천광역시당 위원장",
+        "교육계",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "인천광역시",
+        "sgg": "인천광역시",
+        "name": "도성훈"
+      },
+      "tags": [
+        "인천광역시 교육감",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "인천광역시",
+        "sgg": "인천광역시",
+        "name": "이대형"
+      },
+      "tags": [
+        "인천교육감중도보수단일후보",
+        "현직 단체장",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "인천광역시",
+        "sgg": "인천광역시",
+        "name": "임병구"
+      },
+      "tags": [
+        "전국교육자치혁신연대 상임대표",
+        "교육계",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전북특별자치도",
+        "name": "이원택"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전북특별자치도",
+        "name": "양정무"
+      },
+      "tags": [
+        "교육계",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전북특별자치도",
+        "name": "백승재"
+      },
+      "tags": [
+        "진보당 행정통합 특별위원회 공동위원장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전북특별자치도",
+        "name": "김성수"
+      },
+      "tags": [
+        "세무사 김성수사무소 대표",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전북특별자치도",
+        "name": "김관영"
+      },
+      "tags": [
+        "전북특별자치도지사",
+        "국회의원 경력",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전북특별자치도",
+        "name": "이남호"
+      },
+      "tags": [
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전북특별자치도",
+        "name": "천호성"
+      },
+      "tags": [
+        "전주교육대학교 교수",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "제주특별자치도",
+        "sgg": "제주특별자치도",
+        "name": "위성곤"
+      },
+      "tags": [
+        "국회의원 경력",
+        "3선",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "제주특별자치도",
+        "sgg": "제주특별자치도",
+        "name": "문성유"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "제주특별자치도",
+        "sgg": "제주특별자치도",
+        "name": "김광수"
+      },
+      "tags": [
+        "제17대 제주특별자치도교육청 교육감",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "충청남도",
+        "name": "박수현"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "충청남도",
+        "name": "김태흠"
+      },
+      "tags": [
+        "충청남도지사",
+        "국회의원 경력",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "국회 청소노동자 관련 비하 발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%ED%83%9C%ED%9D%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "촛불시위 참석 보수정당 의원 관련 발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%ED%83%9C%ED%9D%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "세월호 유가족을 향한 막말 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%ED%83%9C%ED%9D%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "천안 시티 FC와 충남 아산 FC 통합 발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%ED%83%9C%ED%9D%A0/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "충청남도",
+        "name": "이병도"
+      },
+      "tags": [
+        "충남민주진보교육감추진위원회 선정후보",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "충청남도",
+        "name": "이병학"
+      },
+      "tags": [
+        "충남교육혁신연구소장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "충청남도",
+        "name": "김영춘"
+      },
+      "tags": [
+        "대통령직속지방시대위원",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "충청남도",
+        "name": "이명수"
+      },
+      "tags": [
+        "국회의원 경력",
+        "4선",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청북도",
+        "sgg": "충청북도",
+        "name": "신용한"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청북도",
+        "sgg": "충청북도",
+        "name": "김영환"
+      },
+      "tags": [
+        "충청북도지사",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "충청북도지사 취임 전 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%98%81%ED%99%98/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "물은 셀프 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%98%81%ED%99%98/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "김부선-이재명 스캔들 의혹 제기 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%98%81%ED%99%98/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "충청북도",
+        "sgg": "충청북도",
+        "name": "윤건영"
+      },
+      "tags": [
+        "충청북도교육감",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "허위인턴 등록·차명계좌 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A4%EA%B1%B4%EC%98%81/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "북한 관련 발언 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A4%EA%B1%B4%EC%98%81/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "선거법 위반 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A4%EA%B1%B4%EC%98%81/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "북한이탈주민 출신 국회의원 비하 발언 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A4%EA%B1%B4%EC%98%81/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "충청북도",
+        "sgg": "충청북도",
+        "name": "김성근"
+      },
+      "tags": [],
+      "controversies": [
+        {
+          "summary": "아마추어 시절 (나무위키 '구설/구단 이적 및 경질 관련 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%B1%EA%B7%BC/%EA%B5%AC%EC%84%A4%2F%EA%B5%AC%EB%8B%A8%20%EC%9D%B4%EC%A0%81%20%EB%B0%8F%20%EA%B2%BD%EC%A7%88%20%EA%B4%80%EB%A0%A8%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "충암고-신일고 감독 이적 과정 (나무위키 '구설/구단 이적 및 경질 관련 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%B1%EA%B7%BC/%EA%B5%AC%EC%84%A4%2F%EA%B5%AC%EB%8B%A8%20%EC%9D%B4%EC%A0%81%20%EB%B0%8F%20%EA%B2%BD%EC%A7%88%20%EA%B4%80%EB%A0%A8%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "이재홍 건국대 진학 강요 사건 (나무위키 '구설/구단 이적 및 경질 관련 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%B1%EA%B7%BC/%EA%B5%AC%EC%84%A4%2F%EA%B5%AC%EB%8B%A8%20%EC%9D%B4%EC%A0%81%20%EB%B0%8F%20%EA%B2%BD%EC%A7%88%20%EA%B4%80%EB%A0%A8%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "사건 개요 (나무위키 '구설/구단 이적 및 경질 관련 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%B1%EA%B7%BC/%EA%B5%AC%EC%84%A4%2F%EA%B5%AC%EB%8B%A8%20%EC%9D%B4%EC%A0%81%20%EB%B0%8F%20%EA%B2%BD%EC%A7%88%20%EA%B4%80%EB%A0%A8%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "사인 훔치기 (나무위키 '구설/경기 운용 관련 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%B1%EA%B7%BC/%EA%B5%AC%EC%84%A4%2F%EA%B2%BD%EA%B8%B0%20%EC%9A%B4%EC%9A%A9%20%EA%B4%80%EB%A0%A8%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "사인 훔치기, 문제인가 아닌가 (나무위키 '구설/경기 운용 관련 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B9%80%EC%84%B1%EA%B7%BC/%EA%B5%AC%EC%84%A4%2F%EA%B2%BD%EA%B8%B0%20%EC%9A%B4%EC%9A%A9%20%EA%B4%80%EB%A0%A8%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시",
+        "name": "이재준"
+      },
+      "tags": [
+        "수원특례시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시",
+        "name": "안교재"
+      },
+      "tags": [
+        "국민의힘 경기도당 AI반도체특별위원회위원장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시",
+        "name": "정희윤"
+      },
+      "tags": [
+        "개혁신당 수원시 갑 당협위원장",
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "고양시",
+        "name": "민경선"
+      },
+      "tags": [
+        "더불어민주당 당대표 특별보좌역 정책특보",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "고양시",
+        "name": "이동환"
+      },
+      "tags": [
+        "고양시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "고양시",
+        "name": "신현철"
+      },
+      "tags": [
+        "제9대고양시의회의원",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "고양시",
+        "name": "송영주"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "용인시",
+        "name": "현근택"
+      },
+      "tags": [
+        "변호사"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "용인시",
+        "name": "이상일"
+      },
+      "tags": [
+        "용인시장",
+        "국회의원 경력",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "용인시",
+        "name": "송창훈"
+      },
+      "tags": [
+        "개혁신당 용인시정 당협위원장",
+        "교육계",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "성남시",
+        "name": "김병욱"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "성남시",
+        "name": "신상진"
+      },
+      "tags": [],
+      "controversies": [
+        {
+          "summary": "상임위 편파 운영 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%8B%A0%EC%83%81%EC%A7%84/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "성남시장 인수위의 공용 휴대전화 통화기록 제출 요구 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%8B%A0%EC%83%81%EC%A7%84/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "딸 이용한 갭투자 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%8B%A0%EC%83%81%EC%A7%84/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "집무실 이전 비용 낭비 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%8B%A0%EC%83%81%EC%A7%84/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "성남시",
+        "name": "장지화"
+      },
+      "tags": [
+        "진보당 중앙당 공동대표",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "부천시",
+        "name": "조용익"
+      },
+      "tags": [
+        "부천시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "부천시",
+        "name": "곽내경"
+      },
+      "tags": [
+        "제8·9대 부천시의회의원",
+        "국회의원 경력"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청북도",
+        "sgg": "청주시",
+        "name": "이장섭"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청북도",
+        "sgg": "청주시",
+        "name": "이범석"
+      },
+      "tags": [
+        "청주시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청북도",
+        "sgg": "청주시",
+        "name": "한현구"
+      },
+      "tags": [
+        "율량사천동 사회보장협의체 위원"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전주시",
+        "name": "조지훈"
+      },
+      "tags": [
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전주시",
+        "name": "조양덕"
+      },
+      "tags": [
+        "예원예술대학교 객원교수",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전주시",
+        "name": "강성희"
+      },
+      "tags": [
+        "국회의원 경력",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "전주시",
+        "name": "김광종"
+      },
+      "tags": [
+        "아리랑당 창추위 대표",
+        "현직 단체장",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "천안시",
+        "name": "장기수"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "천안시",
+        "name": "박찬우"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "충청남도",
+        "sgg": "천안시",
+        "name": "이성진"
+      },
+      "tags": [
+        "개혁신당 이준석 당대표 정무특보",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "창원시",
+        "name": "송순호"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "창원시",
+        "name": "강기윤"
+      },
+      "tags": [
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": [
+        {
+          "summary": "음주운전 전과 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B0%95%EA%B8%B0%EC%9C%A4/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "아들·부인 회사 일감 몰아주기, 부동산 투기 의혹 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B0%95%EA%B8%B0%EC%9C%A4/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "본인이 수혜자가 될 정도 양도소득세 면제하는 조세특례제한법 개정안 대표발의 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B0%95%EA%B8%B0%EC%9C%A4/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "땅투기 의혹 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EA%B0%95%EA%B8%B0%EC%9C%A4/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "창원시",
+        "name": "강명상"
+      },
+      "tags": [
+        "365병원 병원장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "창원시",
+        "name": "박정임"
+      },
+      "tags": [
+        "사",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "김해시",
+        "name": "정영두"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "김해시",
+        "name": "홍태용"
+      },
+      "tags": [
+        "김해시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "김해시",
+        "name": "박봉열"
+      },
+      "tags": [
+        "진보당 경남도당 위원장",
+        "현직 단체장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "포항시",
+        "name": "박희정"
+      },
+      "tags": [
+        "포항시의회의원"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "포항시",
+        "name": "박용선"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "안산시",
+        "name": "천영미"
+      },
+      "tags": [
+        "더불어민주당 중앙당 중앙위원",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "안산시",
+        "name": "이민근"
+      },
+      "tags": [
+        "안산시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "안양시",
+        "name": "최대호"
+      },
+      "tags": [
+        "안양시장",
+        "현직 단체장",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "안양시",
+        "name": "김대영"
+      },
+      "tags": [
+        "국민의힘 경기도당 부위원장",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "남양주시",
+        "name": "최현덕"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "남양주시",
+        "name": "주광덕"
+      },
+      "tags": [
+        "제9대 남양주시장",
+        "국회의원 경력",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "화성시",
+        "name": "정명근"
+      },
+      "tags": [
+        "화성특례시장",
+        "현직 단체장",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "화성시",
+        "name": "박태경"
+      },
+      "tags": [
+        "국민의힘 중앙위원회 지도위원",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "화성시",
+        "name": "전성균"
+      },
+      "tags": [
+        "개혁신당 경기도당 위원장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "평택시",
+        "name": "최원용"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "평택시",
+        "name": "차화열"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "시흥시",
+        "name": "임병택"
+      },
+      "tags": [
+        "시흥시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "파주시",
+        "name": "손배찬"
+      },
+      "tags": [
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "파주시",
+        "name": "박용호"
+      },
+      "tags": [
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "의정부시",
+        "name": "김원기"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "의정부시",
+        "name": "김동근"
+      },
+      "tags": [
+        "의정부시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "군포시",
+        "name": "한대희"
+      },
+      "tags": [
+        "사람사는세상 노무현재단 기획위원",
+        "현직 단체장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "군포시",
+        "name": "하은호"
+      },
+      "tags": [
+        "군포시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "하남시",
+        "name": "강병덕"
+      },
+      "tags": [
+        "더불어민주당 당대표 정책특보",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "하남시",
+        "name": "이현재"
+      },
+      "tags": [
+        "국회의원 경력",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "광명시",
+        "name": "박승원"
+      },
+      "tags": [
+        "광명시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "광명시",
+        "name": "김정호"
+      },
+      "tags": [
+        "경기도의회 경기도교육청 예산결산특별위원회 위",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "오산시",
+        "name": "조용호"
+      },
+      "tags": [
+        "더불어민주당 당대표 특별보좌역 지방자치특보",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "오산시",
+        "name": "이권재"
+      },
+      "tags": [
+        "오산대학교 명예교수",
+        "현직 단체장",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "오산시",
+        "name": "송진영"
+      },
+      "tags": [
+        "오산시의회의원",
+        "교육계"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "이천시",
+        "name": "성수석"
+      },
+      "tags": [
+        "더불어민주당 당대표특별보좌역",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "이천시",
+        "name": "김경희"
+      },
+      "tags": [
+        "이천시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "양주시",
+        "name": "정덕영"
+      },
+      "tags": [
+        "정성호 국회의원 정책특보",
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "양주시",
+        "name": "강수현"
+      },
+      "tags": [
+        "양주시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "구리시",
+        "name": "신동화"
+      },
+      "tags": [
+        "구리시의회 의장"
+      ],
+      "controversies": [
+        {
+          "summary": "공무원 폭행 및 성희롱 혐의 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%8B%A0%EB%8F%99%ED%99%94/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "폭우 중 외유성 출장 의혹 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%8B%A0%EB%8F%99%ED%99%94/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "구리시",
+        "name": "백경현"
+      },
+      "tags": [
+        "민선8기 구리시장",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "나무위키 '비판 및 논란' 항목에 관련 정리가 있음.",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EB%B0%B1%EA%B2%BD%ED%98%84/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "안성시",
+        "name": "김보라"
+      },
+      "tags": [
+        "안성시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "안성시",
+        "name": "김장연"
+      },
+      "tags": [
+        "국민의힘 경기도당 부위원장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "김포시",
+        "name": "이기형"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "김포시",
+        "name": "김병수"
+      },
+      "tags": [
+        "김포시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "여수시",
+        "name": "명창환"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "여수시",
+        "name": "원용규"
+      },
+      "tags": [
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "여수시",
+        "name": "김창주"
+      },
+      "tags": [
+        "주식회사 휴엔텍 대표이사",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "순천시",
+        "name": "손훈모"
+      },
+      "tags": [
+        "더불어민주당 전남도당 부위원장",
+        "변호사",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "순천시",
+        "name": "이성수"
+      },
+      "tags": [
+        "진보당 전남도당 위원장",
+        "국회의원 경력",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "순천시",
+        "name": "노관규"
+      },
+      "tags": [
+        "민선 8기 순천시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "목포시",
+        "name": "강성휘"
+      },
+      "tags": [
+        "더불어민주당 정책위원회 부의장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "목포시",
+        "name": "윤선웅"
+      },
+      "tags": [
+        "한전 KDN",
+        "기업인"
+      ],
+      "controversies": [
+        {
+          "summary": "무릎에 대한 지속적인 비하 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A4%EC%84%A0%EC%9B%85/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "사이버불링 방관 논란 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A4%EC%84%A0%EC%9B%85/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "아빠킹 야식크래쉬 보이콧 유도 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A4%EC%84%A0%EC%9B%85/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "사회적 물의 (나무위키 '논란 및 사건 사고' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%9C%A4%EC%84%A0%EC%9B%85/%EB%85%BC%EB%9E%80%20%EB%B0%8F%20%EC%82%AC%EA%B1%B4%20%EC%82%AC%EA%B3%A0",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "목포시",
+        "name": "박홍률"
+      },
+      "tags": [
+        "조국혁신당 당대표 정무특보",
+        "현직 단체장",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전라남도",
+        "sgg": "목포시",
+        "name": "여인두"
+      },
+      "tags": [
+        "정의당목포시위원회 위원장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "군산시",
+        "name": "김재준"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "군산시",
+        "name": "이주현"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "군산시",
+        "name": "고영섭"
+      },
+      "tags": [
+        "교육계",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "익산시",
+        "name": "최정호"
+      },
+      "tags": [
+        "더불어민주당 당대표 특별보좌역 지방자치특보",
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "익산시",
+        "name": "임형택"
+      },
+      "tags": [
+        "조국혁신당 중앙당 대변인",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "전북특별자치도",
+        "sgg": "익산시",
+        "name": "황세연"
+      },
+      "tags": [
+        "5.18 민주유공자"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "원주시",
+        "name": "원강수"
+      },
+      "tags": [
+        "원주시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "춘천시",
+        "name": "육동한"
+      },
+      "tags": [
+        "춘천시장",
+        "현직 단체장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "춘천시",
+        "name": "정광열"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "강릉시",
+        "name": "김중남"
+      },
+      "tags": [
+        "더불어민주당 가뭄",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "강원특별자치도",
+        "sgg": "강릉시",
+        "name": "김홍규"
+      },
+      "tags": [
+        "강릉시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "경주시",
+        "name": "박근영"
+      },
+      "tags": [
+        "두두리출판기획 대표",
+        "기업인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상북도",
+        "sgg": "경주시",
+        "name": "주낙영"
+      },
+      "tags": [
+        "경주시장",
+        "현직 단체장"
+      ],
+      "controversies": [
+        {
+          "summary": "발레오전장 노조 비하 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A3%BC%EB%82%99%EC%98%81/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "동국대학교 경주캠퍼스 이전 논란 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A3%BC%EB%82%99%EC%98%81/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        },
+        {
+          "summary": "god 비하 발언 (나무위키 '비판 및 논란' 항목)",
+          "date": "2026-05",
+          "source": "https://namu.wiki/w/%EC%A3%BC%EB%82%99%EC%98%81/%EB%B9%84%ED%8C%90%20%EB%B0%8F%20%EB%85%BC%EB%9E%80",
+          "sourceName": "나무위키"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "진주시",
+        "name": "갈상돈"
+      },
+      "tags": [
+        "기업인",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "진주시",
+        "name": "한경호"
+      },
+      "tags": [
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "진주시",
+        "name": "조규일"
+      },
+      "tags": [
+        "진주시장",
+        "현직 단체장"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "양산시",
+        "name": "조문관"
+      },
+      "tags": [
+        "민주연구원 부원장",
+        "정당인"
+      ],
+      "controversies": []
+    },
+    {
+      "match": {
+        "sido": "경상남도",
+        "sgg": "양산시",
+        "name": "나동연"
+      },
+      "tags": [
+        "양산시장",
+        "현직 단체장"
+      ],
+      "controversies": []
     }
   ]
 }
