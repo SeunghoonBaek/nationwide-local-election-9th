@@ -76,7 +76,7 @@ function PdfPageCanvas({
       const cssViewport = page.getViewport({ scale: cssScale });
       const viewport = page.getViewport({ scale: renderScale });
 
-      const ctx = canvas.getContext("2d", { alpha: false });
+      const ctx = canvas.getContext("2d", { alpha: true });
       if (!ctx || cancelled) return;
 
       canvas.width = Math.floor(viewport.width);
@@ -90,7 +90,8 @@ function PdfPageCanvas({
       const task = page.render({
         canvasContext: ctx,
         viewport,
-        intent: "print",
+        intent: "display",
+        background: "#ffffff",
         canvas,
       });
       taskRef.current = task;
@@ -109,7 +110,7 @@ function PdfPageCanvas({
   return (
     <canvas
       ref={canvasRef}
-      className="mb-2 block max-w-none last:mb-0"
+      className="mb-2 block max-w-none bg-white last:mb-0"
     />
   );
 }
