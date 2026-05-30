@@ -306,9 +306,11 @@ function CandidateCards({ candidates }: { candidates: CandidateView[] }) {
             <CardSection title="주요 공약">
               <CandidatePledges candidate={c} />
             </CardSection>
-            <CardSection title="논란·이슈">
-              <CandidateControversies candidate={c} />
-            </CardSection>
+            {c.controversies.length > 0 && (
+              <CardSection title="논란·이슈">
+                <CandidateControversies candidate={c} />
+              </CardSection>
+            )}
           </div>
         </li>
       ))}
@@ -407,28 +409,46 @@ function CandidatePledges({ candidate }: { candidate: CandidateView }) {
     return <span className="text-neutral-400">등록된 공약 없음</span>;
   }
 
+  const src = candidate.pledgeSource;
+
   return (
-    <ol className="space-y-1.5 break-words">
-      {candidate.pledges.slice(0, 10).map((p, i) => (
-        <li key={i}>
-          {p.realm && (
-            <span className="mr-1 rounded bg-emerald-50 px-1.5 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-              {p.realm}
-            </span>
-          )}
-          <span className="font-medium">{p.title}</span>
-          {p.content && (
-            <p className="mt-0.5 text-xs text-neutral-500">{p.content}</p>
-          )}
-        </li>
-      ))}
-    </ol>
+    <div>
+      <ol className="space-y-1.5 break-words">
+        {candidate.pledges.slice(0, 10).map((p, i) => (
+          <li key={i}>
+            {p.realm && (
+              <span className="mr-1 rounded bg-emerald-50 px-1.5 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                {p.realm}
+              </span>
+            )}
+            <span className="font-medium">{p.title}</span>
+            {p.content && (
+              <p className="mt-0.5 text-xs text-neutral-500">{p.content}</p>
+            )}
+          </li>
+        ))}
+      </ol>
+      {src && (
+        <p className="mt-2 text-xs text-neutral-400">
+          출처:{" "}
+          <a
+            href={src.source}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-neutral-300 underline-offset-2 hover:text-neutral-600 dark:hover:text-neutral-300"
+          >
+            {src.sourceName}
+          </a>
+          {src.note && <> · {src.note}</>}
+        </p>
+      )}
+    </div>
   );
 }
 
 function CandidateControversies({ candidate }: { candidate: CandidateView }) {
   if (candidate.controversies.length === 0) {
-    return <span className="text-neutral-400">등록된 항목 없음</span>;
+    return null;
   }
 
   return (
