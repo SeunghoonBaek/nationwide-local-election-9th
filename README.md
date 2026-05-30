@@ -29,6 +29,16 @@ In the app: Province -> Election type -> (District) -> Electoral district, then 
 
 > Candidate/pledge data appears in the API only after candidate registration closes (about two weeks before election day).
 
+When the NEC pledge API returns empty (common for local council races), the app falls back to `src/data/pledges-manual.json`. Rebuild it for all Suwon districts:
+
+```bash
+make pledges   # scrapes council.suwon.go.kr + merges scripts/pledges-news-supplements.json
+```
+
+Add challenger pledges from news interviews in `scripts/pledges-news-supplements.json`.
+
+**All candidates** also get a link to the official election bulletin (선거공보 PDF) from [policy.nec.go.kr](https://policy.nec.go.kr) when published — see `docs/architecture.md` and `docs/nec-api.md`.
+
 ## 3. Controversies data (manual curation)
 
 This qualitative info is not in the official API, so add it (with sources) in `src/data/controversies.json`.
@@ -62,13 +72,23 @@ src/
   lib/
     constants.ts        # election id, election type codes (shared with client)
     nec.ts              # NEC Open API client (server-only)
+    pledges-manual.ts   # manual pledge fallback matcher
+    policy-nec.ts       # policy.nec.go.kr bulletin PDF + page URLs
+    candidate-photo.ts  # portrait URLs from info.nec.go.kr
     controversies.ts    # controversy data matching
-  data/controversies.json
+  data/
+    controversies.json
+    pledges-manual.json
   app/
     api/sido|gusigun|sgg|candidates/route.ts   # API proxy (protects the key)
     page.tsx            # region selectors + candidate comparison table UI
-scripts/check-nec.mjs   # key / connectivity check
+scripts/
+  check-nec.mjs           # key / connectivity check
+  build-pledges-manual.mjs
+  pledges-news-supplements.json
 ```
+
+Details: [`docs/architecture.md`](docs/architecture.md), [`docs/nec-api.md`](docs/nec-api.md).
 
 ## 5. Limitations / notes
 

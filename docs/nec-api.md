@@ -50,6 +50,9 @@ district flow (`SELECTABLE_SG_TYPES = [3, 11, 4, 5, 6]`).
 
 - Success: `resultCode == "INFO-00"`.
 - No data: `INFO-03` (and `INFO-200`) – treat as empty result, **not** an error.
+- **Local council (type 6):** as of May 2026, most candidates return `INFO-03`
+  even when election bulletins are published on policy.nec.go.kr. The app uses
+  manual fallback + policy-site bulletin links for those cases.
 - Unregistered/invalid key: plain-text `Unauthorized` (HTTP 401), or an
   `OpenAPI_ServiceResponse.cmmMsgHeader` envelope.
 - A single result may come back as an object instead of an array — normalize.
@@ -87,3 +90,69 @@ Gwangju/Jeonnam region appears as `전남광주통합특별시` under `sdName=�
 Because of this, the province dropdown is built from the (complete)
 gu/si/gun code list instead of governor districts, so all 17 provinces —
 including `전라남도` — are selectable.
+
+## Policy site supplement (policy.nec.go.kr)
+
+Not part of data.go.kr, but used by `src/lib/policy-nec.ts` to attach **election
+bulletin (선거공보) PDF links** to every candidate. The official commiment UI
+loads data via same-origin POST JSON endpoints; we call those server-side with a
+Referer header (no session cookie required for read-only list calls).
+
+| Step | Endpoint | Purpose |
+|------|----------|---------|
+| Bootstrap | `GET /plc/commiment/initUCACommiment.do?menuId=CNDDT25` | warm path (optional) |
+| Province | `POST initUCACommimentRegion.do` | `sgId`, `subSgId` → region list |
+| Districts | `POST initUCACommimentSgg.do` | `wiwsidocode` → `sgglist[]` |
+| Candidates | `POST initUCACommimentList.do` | `hRegionId`, `hSggId`, `sgTypecode` → rows |
+
+**`subSgId` (policy menu election id)** maps from our `sgTypecode`:
+
+| sgTypecode | subSgId | Election |
+|------------|---------|----------|
+| 3 | `320260603` | 시·도지사 |
+| 4 | `420260603` | 구·시·군의 장 |
+| 5 | `520260603` | 시·도의원 |
+| 6 | `620260603` | 구·시·군의원 |
+| 8 | `820260603` | 광역 비례 |
+| 9 | `920260603` | 기초 비례 |
+| 11 | `1120260603` | 교육감 |
+
+**Row fields used:** `huboid` (matches Open API `cnddtId`), `fileinfo` (comma-
+separated `label||pdfPath||…` segments). Bulletin URL:
+
+```
+https://cdn.nec.go.kr/policy_pdf/{pdfPath}
+```
+
+**District page URL** (deep link, opens commiment UI for that electoral district):
+
+```
+https://policy.nec.go.kr/plc/commiment/initUCACommiment.do
+  ?menuId=CNDDT25&psgId=20260603&psubSgId={subSgId}&psidoId={wiwid}&psggid={sggid}
+```
+
+**Caching:** in-memory per `{sgType}:{sido}:{sgg}` for 6 hours (`next.revalidate`
+on fetch). One list call covers all candidates in the district.
+
+**Limitations:**
+
+- Undocumented; could change without notice (same risk noted in worklog for
+  scraping — mitigated by using the same JSON API the official site calls).
+- Direct navigation to some commiment URLs without query params returns “비정상적
+  접근”; always use the full parameter set above.
+- List pagination: current code requests `pageIndex=1` only; very large districts
+  may need paging if `totalCnt > page size` (not yet observed as a problem).
+- Thumbnail in policy UI (`photo_{sgId}/{filename}`) is the **candidate portrait**,
+  not the pledge poster; the bulletin PDF is the authoritative pledge document link.
+
+## Manual pledge fallback (not NEC API)
+
+When `getCnddtElecPrmsInfoInqire` is empty, `src/lib/pledges-manual.ts` matches
+`src/data/pledges-manual.json` by `sido` / `sgg` / `name`. Rebuild for Suwon:
+
+```bash
+make pledges
+```
+
+Sources: Suwon city council `/member/{id}/promise.do` (incumbents), plus news
+interviews in `scripts/pledges-news-supplements.json` (challengers).

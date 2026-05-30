@@ -1,0 +1,772 @@
+{
+  "_comment": "Manual pledge fallback when NEC ElecPrmsInfoInqire API returns INFO-03. Sources: 수원시의회 공약 페이지, 후보 인터뷰·보도. Not official NEC API data.",
+  "_meta": {
+    "collectedAt": "2026-05-30",
+    "scope": "수원시 구·시·군의원 13개 선거구 (시의회 스크래핑 + 언론 보완)",
+    "suwonCouncilMembers": 34,
+    "suwonAutoMatched": 15,
+    "newsSupplements": 2
+  },
+  "items": [
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시가선거구",
+        "name": "정영모"
+      },
+      "source": "https://council.suwon.go.kr/member/12210/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "조원시장 주차장 확보 및 시설 현대화"
+        },
+        {
+          "order": "2",
+          "title": "수원천변 데크길 조성"
+        },
+        {
+          "order": "3",
+          "title": "광교산 공영 주차장 확장건립"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시나선거구",
+        "name": "오세철"
+      },
+      "source": "https://council.suwon.go.kr/member/12110/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "북수원 4차산업 융합 클러스터 추진"
+        },
+        {
+          "order": "2",
+          "title": "서호천 명품산책로 조성"
+        },
+        {
+          "order": "3",
+          "title": "북수원시장 경영혁신지원사업"
+        },
+        {
+          "order": "4",
+          "title": "만석공원 친환경 리모델링"
+        },
+        {
+          "order": "5",
+          "title": "스마트환승 정류장（신수원선,BRT）조성"
+        },
+        {
+          "order": "6",
+          "title": "조원IC 환경개선 및 조형물설치"
+        },
+        {
+          "order": "7",
+          "title": "조원2동 경찰전직지원센터 이전"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시다선거구",
+        "name": "김경례"
+      },
+      "source": "https://council.suwon.go.kr/member/12050/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "공부하는 시의원，제대로 하는 시의원의 표상이 되겠습니다."
+        },
+        {
+          "order": "2",
+          "title": "지방 재정 전문가로 성장하겠습니다."
+        },
+        {
+          "order": "3",
+          "title": "이재준시장의 공약실천을 위해 항상 앞장서겠습니다."
+        },
+        {
+          "order": "4",
+          "title": "정기적으로 토론회 개최를 실시하겠습니다."
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시라선거구",
+        "name": "유재광"
+      },
+      "source": "https://council.suwon.go.kr/member/01006/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "서둔동 행정복지센터 이전 신축"
+        },
+        {
+          "order": "2",
+          "title": "탑동 대형 공영주차장 추진"
+        },
+        {
+          "order": "3",
+          "title": "구운역 설치 추진（신분당선）"
+        },
+        {
+          "order": "4",
+          "title": "율전동 송전탑 지중화 사업추진"
+        },
+        {
+          "order": "5",
+          "title": "천천푸르지오 A동문~북문 보도 정비공사 추진"
+        },
+        {
+          "order": "6",
+          "title": "수원 R&D사이언스파크 조기착공"
+        },
+        {
+          "order": "7",
+          "title": "당수동 중학교 조기건립 고등학교 신설추진"
+        },
+        {
+          "order": "8",
+          "title": "입북동 송전탑 지중학 사업추진"
+        },
+        {
+          "order": "9",
+          "title": "수원 전투 비행장 이전（수원시장후보 공통 공약）"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시라선거구",
+        "name": "이대선"
+      },
+      "source": "https://council.suwon.go.kr/member/12030/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "첨단R&D사이언스파크 착공추진"
+        },
+        {
+          "order": "2",
+          "title": "구운역 추진"
+        },
+        {
+          "order": "3",
+          "title": "당수중학교 조기 개교 추진"
+        },
+        {
+          "order": "4",
+          "title": "서둔동 행정복지센터 확장 이전 추진"
+        },
+        {
+          "order": "5",
+          "title": "율전지하차도 보행자통행로 확장공사"
+        },
+        {
+          "order": "6",
+          "title": "율전파출소 이전 유후 부지 주민 편의시설 조성"
+        },
+        {
+          "order": "7",
+          "title": "구운동 행정복지센터 확장 추진"
+        },
+        {
+          "order": "8",
+          "title": "공영주차장 확대 및 조성"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시마선거구",
+        "name": "김정렬"
+      },
+      "source": "https://council.suwon.go.kr/member/01003/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "수인분당선 지상구간 시민공원 재정비 추진"
+        },
+        {
+          "order": "2",
+          "title": "평동 제2편익시설추진"
+        },
+        {
+          "order": "3",
+          "title": "수원비행장 이전 본격 추진"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시마선거구",
+        "name": "박현수"
+      },
+      "source": "https://council.suwon.go.kr/member/12070/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "realm": "주민이 스스로 만들어가는 주민자치",
+          "title": "주민이 주인되는 행정 실현"
+        },
+        {
+          "order": "2",
+          "realm": "주민이 스스로 만들어가는 주민자치",
+          "title": "주민자치회 신모델 구축"
+        },
+        {
+          "order": "3",
+          "realm": "주민이 스스로 만들어가는 주민자치",
+          "title": "주민참여 예산제 확대"
+        },
+        {
+          "order": "4",
+          "realm": "주민이 스스로 만들어가는 주민자치",
+          "title": "주민소통의 날（시의원 쫌 만납시다.）"
+        },
+        {
+          "order": "5",
+          "realm": "주민의 안전과 행복한 삶을 위한 주거 환경",
+          "title": "전통문화와 4차산업의 융합실현（영상기술과 드론기술을 활용한 전통문화 행사 개최）"
+        },
+        {
+          "order": "6",
+          "realm": "주민의 안전과 행복한 삶을 위한 주거 환경",
+          "title": "생태복합힐링 문화체육센터 건립 추진"
+        },
+        {
+          "order": "7",
+          "realm": "주민의 안전과 행복한 삶을 위한 주거 환경",
+          "title": "스파트팜 실내 수직농장 설립"
+        },
+        {
+          "order": "8",
+          "realm": "주민의 안전과 행복한 삶을 위한 주거 환경",
+          "title": "당수지구 주민 주도형 공원 구축"
+        },
+        {
+          "order": "9",
+          "realm": "3대가 행복한 복지 인프라 구축",
+          "title": "아동전문병원 유치 추진"
+        },
+        {
+          "order": "10",
+          "realm": "3대가 행복한 복지 인프라 구축",
+          "title": "황구지천과 칠보산 둘레길 조성（드론 연습 및 경기장 설치，자연 학습장）"
+        },
+        {
+          "order": "11",
+          "realm": "3대가 행복한 복지 인프라 구축",
+          "title": "주민 캠핑장 및 바베큐 공원 조성（칠보산 생태체험 및 별보기）"
+        },
+        {
+          "order": "12",
+          "realm": "3대가 행복한 복지 인프라 구축",
+          "title": "신분당선 조기착공"
+        },
+        {
+          "order": "13",
+          "realm": "3대가 행복한 복지 인프라 구축",
+          "title": "과천의왕 고속도로 방음터널 설치（금곡-호매실 구간）"
+        },
+        {
+          "order": "14",
+          "realm": "아이들의 탄탄한 교육환경 조성",
+          "title": "4차산업혁명 AloT 체험형 도서관 건립 추진"
+        },
+        {
+          "order": "15",
+          "realm": "아이들의 탄탄한 교육환경 조성",
+          "title": "경력단절 여성 전문 교육기관 설립 추진"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시마선거구",
+        "name": "박혜연"
+      },
+      "source": "https://www.gidaily.co.kr/82801",
+      "sourceName": "경인데일리",
+      "note": "2026-05-15 후보 인터뷰. NEC·공약마당 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "realm": "교통",
+          "title": "서수원 대중교통 접근성 개선",
+          "content": "오목천·고색 등 서수원 이동 시 환승 부담을 줄이는 교통 연결 개선"
+        },
+        {
+          "order": "2",
+          "realm": "주차",
+          "title": "자투리 공간 활용 공영주차장 조성",
+          "content": "공영주차 부족으로 상권 활성화가 막히는 문제 해소"
+        },
+        {
+          "order": "3",
+          "realm": "생활정치",
+          "title": "현장 민원 발굴·해결형 생활밀착 의정",
+          "content": "지역 순례·주민 소통으로 문제점을 찾고 결과를 피드백하는 시의원"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시마선거구",
+        "name": "윤경선"
+      },
+      "source": "https://council.suwon.go.kr/member/00833/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "realm": "교통제일 서수원",
+          "title": "당수로 조기 확장"
+        },
+        {
+          "order": "2",
+          "realm": "교통제일 서수원",
+          "title": "호매실IC 진입로 확장"
+        },
+        {
+          "order": "3",
+          "realm": "교통제일 서수원",
+          "title": "신분당선 호매실역 조기 착공"
+        },
+        {
+          "order": "4",
+          "realm": "교통제일 서수원",
+          "title": "강남아파트-당수동 방면 도로 신설"
+        },
+        {
+          "order": "5",
+          "realm": "교통제일 서수원",
+          "title": "버스 증차 및 신설"
+        },
+        {
+          "order": "6",
+          "realm": "교통제일 서수원",
+          "title": "서수원-과천 도로 방음터널 설치"
+        },
+        {
+          "order": "7",
+          "realm": "교통제일 서수원",
+          "title": "당수동, 입북동 인도 개선"
+        },
+        {
+          "order": "8",
+          "realm": "교통제일 서수원",
+          "title": "금곡동주민센터 앞 횡단보도 설치"
+        },
+        {
+          "order": "9",
+          "realm": "교통제일 서수원",
+          "title": "금곡동 행정복지센터 앞 횡단보도 설치"
+        },
+        {
+          "order": "10",
+          "realm": "복지최고 서수원",
+          "title": "당수동 복합문화도서관 건립"
+        },
+        {
+          "order": "11",
+          "realm": "복지최고 서수원",
+          "title": "금곡동 도서관 건립"
+        },
+        {
+          "order": "12",
+          "realm": "복지최고 서수원",
+          "title": "수원형 마더센터 건립"
+        },
+        {
+          "order": "13",
+          "realm": "복지최고 서수원",
+          "title": "실내 배드민턴장 신설"
+        },
+        {
+          "order": "14",
+          "realm": "복지최고 서수원",
+          "title": "서수원 체육관 인조잔디구장 지역 주민 우선 배정"
+        },
+        {
+          "order": "15",
+          "realm": "복지최고 서수원",
+          "title": "잔디 축구장 증설, 족구장 등 생활체육 시설 확대"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시마선거구",
+        "name": "이동엽"
+      },
+      "source": "http://m.gidaily.co.kr/82433",
+      "sourceName": "경인데일리",
+      "note": "2026-04-29 후보 인터뷰 및 2026-05 출정식 보도(경인매일). NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "realm": "군공항",
+          "title": "군공항 이전 추진 및 소음 피해 보상 재정비",
+          "content": "이전 완료 전까지 산발적 보상 기준의 괴리를 줄이는 실질 해법 마련"
+        },
+        {
+          "order": "2",
+          "realm": "교통",
+          "title": "신분당선 개통 차질 없이 추진"
+        },
+        {
+          "order": "3",
+          "realm": "주차",
+          "title": "공영주차장 확충",
+          "content": "차량 1대분 공간에 15대 이상 주차되는 심각한 주차난 해소"
+        },
+        {
+          "order": "4",
+          "realm": "문화체육",
+          "title": "공공도서관·호매실 수영장 등 문화체육복합시설 추진"
+        },
+        {
+          "order": "5",
+          "realm": "문화",
+          "title": "호매실역 주변 역사문화공간 건립"
+        },
+        {
+          "order": "6",
+          "realm": "보육·교육",
+          "title": "든든한 보육·탄탄한 교육(수원 대디)",
+          "content": "아이·부모 중심 생활 현안 우선 해결"
+        },
+        {
+          "order": "7",
+          "realm": "경제",
+          "title": "수원맘 경력보유여성 재취업 지원"
+        },
+        {
+          "order": "8",
+          "realm": "복지",
+          "title": "어르신 일자리 및 건강돌봄 확대"
+        },
+        {
+          "order": "9",
+          "realm": "농업·환경",
+          "title": "스마트팜·생태학습장 조성"
+        },
+        {
+          "order": "10",
+          "realm": "경제",
+          "title": "로컬·강소기업 글로벌 판로 지원"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시마선거구",
+        "name": "조미옥"
+      },
+      "source": "https://council.suwon.go.kr/member/01107/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "수원 미래 발전의 핵심 군공항 이전 추진 및 군소음 피해 보상"
+        },
+        {
+          "order": "2",
+          "title": "신분당선 광교--호매실 미개통 사업 조속한 착공"
+        },
+        {
+          "order": "3",
+          "title": "금곡동 공공도서관 조기 착공"
+        },
+        {
+          "order": "4",
+          "title": "고색동 일원 탄소중립 그린도시개발 성공적 추진"
+        },
+        {
+          "order": "5",
+          "title": "황구지천 도심형 생태공원 조성"
+        },
+        {
+          "order": "6",
+          "title": "구도심 도시재생 사업 추진"
+        },
+        {
+          "order": "7",
+          "title": "지역경제 활성화를 위한 공영주차장 확충"
+        },
+        {
+          "order": "8",
+          "title": "즐거운 교육공동체 지원"
+        },
+        {
+          "order": "9",
+          "title": "워라벨시대에 맞는 주민여가 향유를 위한 지역 문화，예술, 스포츠 생태계 조성"
+        },
+        {
+          "order": "10",
+          "title": "편리한 교통인프라를 위해 광역 시내 마을버스 노선 확충 및 합리적 조정"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시바선거구",
+        "name": "김미경"
+      },
+      "source": "https://council.suwon.go.kr/member/01001/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "팔달구 의료특구 추진"
+        },
+        {
+          "order": "2",
+          "title": "화서1동 공용주차장 조기완공"
+        },
+        {
+          "order": "3",
+          "title": "화서2동 공용주차장 조기완공"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시사선거구",
+        "name": "유준숙"
+      },
+      "source": "https://council.suwon.go.kr/member/01115/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "재래시장 주변 환경 활성화"
+        },
+        {
+          "order": "2",
+          "title": "교육환경 개선"
+        },
+        {
+          "order": "3",
+          "title": "함께하는 팔달 행복한 팔달"
+        },
+        {
+          "order": "4",
+          "title": "청소년 문화공간 조성"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시아선거구",
+        "name": "배지환"
+      },
+      "source": "https://council.suwon.go.kr/member/12090/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "지하철 3호선 연장 및 신매탄역 설치 추진"
+        },
+        {
+          "order": "2",
+          "title": "영통구 新복합청사 건립 추진"
+        },
+        {
+          "order": "3",
+          "title": "원천리천, 매탄동 내 공원 및 체육시설 재정비 추진"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시아선거구",
+        "name": "사정희"
+      },
+      "source": "https://council.suwon.go.kr/member/12040/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "수원특례시 관내소속 사회복지종사자 단일임금 체계구축 지원"
+        },
+        {
+          "order": "2",
+          "title": "아동의 통합돌봄 추진지원"
+        },
+        {
+          "order": "3",
+          "title": "매탄동 아동 • 청소년 교육문화 복합 공간 설립 지원"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시자선거구",
+        "name": "이재형"
+      },
+      "source": "https://council.suwon.go.kr/member/12140/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "호수공원음악분수대 설치"
+        },
+        {
+          "order": "2",
+          "title": "영통 소각장 원점 재검토"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시타선거구",
+        "name": "이기범"
+      },
+      "source": "https://www.newspanorama.kr/news/articleView.html?idxno=903019",
+      "sourceName": "뉴스파노라마",
+      "note": "2026-05-29 후보 인터뷰. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "realm": "교통",
+          "title": "권선2·곡선동 외부 연결 버스 노선 확충",
+          "content": "권선자이 등 인구 밀집 지역의 열악한 대중교통망 개선"
+        },
+        {
+          "order": "2",
+          "realm": "주차",
+          "title": "학교 연계 공유주차장 조성",
+          "content": "맛고을·곡반정 상권 등 주차난 해소"
+        },
+        {
+          "order": "3",
+          "realm": "창업",
+          "title": "청년 소상공인 창업 정보·지원 플랫폼 구축"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시파선거구",
+        "name": "방광현"
+      },
+      "source": "https://www.tookyung.com/news/articleView.html?idxno=716523",
+      "sourceName": "투데이경제",
+      "note": "2026-05-15 후보 인터뷰. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "realm": "주차",
+          "title": "망포역 주차난 해소",
+          "content": "영동중학교 부지 임시주차장 활용 등 부분 해법 검토"
+        },
+        {
+          "order": "2",
+          "realm": "체육",
+          "title": "화산골프장 파3 부지 파크골프장 전환 검토"
+        },
+        {
+          "order": "3",
+          "realm": "교육",
+          "title": "망포 과밀학급·과밀학교 문제 해결"
+        },
+        {
+          "order": "4",
+          "realm": "안전",
+          "title": "태장 사거리 등 골목길 보행환경 부분 개선"
+        },
+        {
+          "order": "5",
+          "realm": "도시",
+          "title": "영통 신도시 노후화 대응·지역 소규모 현안(독침산 등산로, 경로당 등) 개선"
+        }
+      ]
+    },
+    {
+      "match": {
+        "sido": "경기도",
+        "sgg": "수원시파선거구",
+        "name": "최원용"
+      },
+      "source": "https://council.suwon.go.kr/member/12130/promise.do",
+      "sourceName": "수원특례시의회",
+      "note": "현직 의원 매니페스토 공약. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "title": "교육 바우처 실시"
+        },
+        {
+          "order": "2",
+          "title": "공원 / 문화센터 등 각종 시설 개선"
+        },
+        {
+          "order": "3",
+          "title": "각종 대회 및 참여형 프로그램 확대"
+        },
+        {
+          "order": "4",
+          "title": "난임 / 육아 / 돌봄 지원 확대"
+        },
+        {
+          "order": "5",
+          "title": "기존 노인 지원 정책 개선"
+        },
+        {
+          "order": "6",
+          "title": "전기차 충전기 설치 확대"
+        },
+        {
+          "order": "7",
+          "title": "아파트 리모델링 적극 지원"
+        },
+        {
+          "order": "8",
+          "title": "영통 자원회수시설 이전 적극 지원"
+        }
+      ]
+    }
+  ]
+}

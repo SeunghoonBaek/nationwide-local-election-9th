@@ -1,0 +1,64 @@
+{
+  "_comment": "News/interview-sourced pledges for challengers without council pages. Merged by build-pledges-manual.mjs.",
+  "items": [
+    {
+      "match": { "sido": "경기도", "sgg": "수원시타선거구", "name": "이기범" },
+      "source": "https://www.newspanorama.kr/news/articleView.html?idxno=903019",
+      "sourceName": "뉴스파노라마",
+      "note": "2026-05-29 후보 인터뷰. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "realm": "교통",
+          "title": "권선2·곡선동 외부 연결 버스 노선 확충",
+          "content": "권선자이 등 인구 밀집 지역의 열악한 대중교통망 개선"
+        },
+        {
+          "order": "2",
+          "realm": "주차",
+          "title": "학교 연계 공유주차장 조성",
+          "content": "맛고을·곡반정 상권 등 주차난 해소"
+        },
+        {
+          "order": "3",
+          "realm": "창업",
+          "title": "청년 소상공인 창업 정보·지원 플랫폼 구축"
+        }
+      ]
+    },
+    {
+      "match": { "sido": "경기도", "sgg": "수원시파선거구", "name": "방광현" },
+      "source": "https://www.tookyung.com/news/articleView.html?idxno=716523",
+      "sourceName": "투데이경제",
+      "note": "2026-05-15 후보 인터뷰. NEC API 미등록.",
+      "pledges": [
+        {
+          "order": "1",
+          "realm": "주차",
+          "title": "망포역 주차난 해소",
+          "content": "영동중학교 부지 임시주차장 활용 등 부분 해법 검토"
+        },
+        {
+          "order": "2",
+          "realm": "체육",
+          "title": "화산골프장 파3 부지 파크골프장 전환 검토"
+        },
+        {
+          "order": "3",
+          "realm": "교육",
+          "title": "망포 과밀학급·과밀학교 문제 해결"
+        },
+        {
+          "order": "4",
+          "realm": "안전",
+          "title": "태장 사거리 등 골목길 보행환경 부분 개선"
+        },
+        {
+          "order": "5",
+          "realm": "도시",
+          "title": "영통 신도시 노후화 대응·지역 소규모 현안(독침산 등산로, 경로당 등) 개선"
+        }
+      ]
+    }
+  ]
+}

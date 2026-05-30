@@ -404,12 +404,59 @@ function CandidateTraits({ candidate }: { candidate: CandidateView }) {
   );
 }
 
-function CandidatePledges({ candidate }: { candidate: CandidateView }) {
-  if (candidate.pledges.length === 0) {
-    return <span className="text-neutral-400">등록된 공약 없음</span>;
-  }
+function PolicyPosterLink({
+  policy,
+}: {
+  policy: NonNullable<CandidateView["pledgePolicy"]>;
+}) {
+  return (
+    <p className="mt-2 text-xs leading-relaxed text-neutral-400">
+      {policy.bulletinUrl ? (
+        <>
+          <a
+            href={policy.bulletinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+          >
+            공약 포스터(선거공보) 보기
+          </a>
+          {" · "}
+          <a
+            href={policy.pageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-neutral-300 underline-offset-2 hover:text-neutral-600 dark:hover:text-neutral-300"
+          >
+            공약마당
+          </a>
+        </>
+      ) : (
+        <a
+          href={policy.pageUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+        >
+          공약마당에서 포스터·선거공보 확인
+        </a>
+      )}
+    </p>
+  );
+}
 
+function CandidatePledges({ candidate }: { candidate: CandidateView }) {
+  const policy = candidate.pledgePolicy;
   const src = candidate.pledgeSource;
+
+  if (candidate.pledges.length === 0) {
+    return (
+      <div className="text-neutral-400">
+        <span>등록된 공약 없음</span>
+        {policy && <PolicyPosterLink policy={policy} />}
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -442,6 +489,7 @@ function CandidatePledges({ candidate }: { candidate: CandidateView }) {
           {src.note && <> · {src.note}</>}
         </p>
       )}
+      {policy && <PolicyPosterLink policy={policy} />}
     </div>
   );
 }

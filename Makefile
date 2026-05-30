@@ -37,6 +37,9 @@ start: build ## Build then run in production mode
 check: ## Check NEC API key / connectivity
 	$(NPM) run check-nec
 
+pledges: ## Rebuild manual pledge fallback (Suwon council + news supplements)
+	node scripts/build-pledges-manual.mjs
+
 lint: ## Run ESLint
 	$(NPM) run lint
 

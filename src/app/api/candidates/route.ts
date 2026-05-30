@@ -10,9 +10,19 @@ import {
 } from "@/lib/nec";
 import { getCandidatePhotoUrl } from "@/lib/candidate-photo";
 import { getCandidateExtra, type CandidateExtra } from "@/lib/controversies";
+import {
+  getManualPledges,
+  type PledgeSource,
+} from "@/lib/pledges-manual";
+import {
+  getPolicyPledgeLinks,
+  type PolicyPledgeLink,
+} from "@/lib/policy-nec";
 
 export type CandidateView = Candidate & {
   pledges: Pledge[];
+  pledgeSource?: PledgeSource;
+  pledgePolicy?: PolicyPledgeLink;
 } & CandidateExtra;
 
 export async function GET(req: NextRequest) {
@@ -34,16 +44,30 @@ export async function GET(req: NextRequest) {
     const views: CandidateView[] = await Promise.all(
       candidates.map(async (c) => {
         let pledges: Pledge[] = [];
+        let pledgeSource: PledgeSource | undefined;
         try {
           pledges = await getPledges(sgType, c.cnddtId);
         } catch {
           pledges = [];
         }
+        if (pledges.length === 0) {
+          const manual = getManualPledges(sido, sgg, c.name);
+          if (manual) {
+            pledges = manual.pledges;
+            pledgeSource = manual.pledgeSource;
+          }
+        }
         const photoUrl = await getCandidatePhotoUrl(c.cnddtId);
         const extra = getCandidateExtra(sido, sgg, c.name);
-        return { ...c, pledges, photoUrl, ...extra };
+        return { ...c, pledges, pledgeSource, photoUrl, ...extra };
       })
     );
+
+    const policyLinks = await getPolicyPledgeLinks(sgType, sido, sgg);
+    for (const v of views) {
+      const link = policyLinks.get(v.cnddtId);
+      if (link) v.pledgePolicy = link;
+    }
 
     // sort by ballot number (giho)
     views.sort((a, b) => {
