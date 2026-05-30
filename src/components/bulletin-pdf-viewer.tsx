@@ -122,6 +122,7 @@ export function BulletinPdfViewer({
   title: string;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
   const zoomRef = useRef(1);
 
@@ -133,6 +134,7 @@ export function BulletinPdfViewer({
   /** Live CSS scale during pinch — canvas re-renders only after pinch ends. */
   const [pinchScale, setPinchScale] = useState(1);
   const [viewportTick, setViewportTick] = useState(0);
+  const [layoutSize, setLayoutSize] = useState({ w: 0, h: 0 });
   const pinchScaleRef = useRef(1);
   zoomRef.current = zoom;
   pinchScaleRef.current = pinchScale;
@@ -191,6 +193,8 @@ export function BulletinPdfViewer({
   }, []);
 
   useEffect(() => {
+    if (loadState !== "ready") return;
+
     const el = scrollRef.current;
     if (!el) return;
 
@@ -200,18 +204,25 @@ export function BulletinPdfViewer({
       return Math.hypot(dx, dy);
     };
 
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length !== 2) return;
-      pinchRef.current = { dist: touchDist(e.touches), zoom: zoomRef.current };
+    const beginPinch = (touches: TouchList) => {
+      pinchRef.current = { dist: touchDist(touches), zoom: zoomRef.current };
       setPinchScale(1);
     };
 
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        beginPinch(e.touches);
+      }
+    };
+
     const onTouchMove = (e: TouchEvent) => {
-      if (e.touches.length !== 2 || !pinchRef.current) return;
-      const ratio = touchDist(e.touches) / pinchRef.current.dist;
-      const next = clampZoom(pinchRef.current.zoom * ratio);
-      const livePinch = next / pinchRef.current.zoom;
-      setPinchScale(livePinch);
+      if (e.touches.length !== 2) return;
+      if (!pinchRef.current) {
+        beginPinch(e.touches);
+      }
+      const ratio = touchDist(e.touches) / pinchRef.current!.dist;
+      const next = clampZoom(pinchRef.current!.zoom * ratio);
+      setPinchScale(next / pinchRef.current!.zoom);
       e.preventDefault();
     };
 
@@ -226,18 +237,19 @@ export function BulletinPdfViewer({
       pinchRef.current = null;
     };
 
-    el.addEventListener("touchstart", onTouchStart, { passive: true });
-    el.addEventListener("touchmove", onTouchMove, { passive: false });
-    el.addEventListener("touchend", onTouchEnd);
-    el.addEventListener("touchcancel", onTouchEnd);
+    // Capture phase so pinch wins over scroll on iOS/Android.
+    el.addEventListener("touchstart", onTouchStart, { passive: true, capture: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false, capture: true });
+    el.addEventListener("touchend", onTouchEnd, { capture: true });
+    el.addEventListener("touchcancel", onTouchEnd, { capture: true });
 
     return () => {
-      el.removeEventListener("touchstart", onTouchStart);
-      el.removeEventListener("touchmove", onTouchMove);
-      el.removeEventListener("touchend", onTouchEnd);
-      el.removeEventListener("touchcancel", onTouchEnd);
+      el.removeEventListener("touchstart", onTouchStart, { capture: true });
+      el.removeEventListener("touchmove", onTouchMove, { capture: true });
+      el.removeEventListener("touchend", onTouchEnd, { capture: true });
+      el.removeEventListener("touchcancel", onTouchEnd, { capture: true });
     };
-  }, []);
+  }, [loadState]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -251,6 +263,20 @@ export function BulletinPdfViewer({
     ro.observe(el);
     return () => ro.disconnect();
   }, [loadState, pdfDoc, measureFit]);
+
+  useEffect(() => {
+    const node = contentRef.current;
+    if (!node || loadState !== "ready") return;
+
+    const measure = () => {
+      setLayoutSize({ w: node.offsetWidth, h: node.offsetHeight });
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, [loadState, zoom, numPages, viewportTick]);
 
   const zoomIn = () => {
     setPinchScale(1);
@@ -319,33 +345,52 @@ export function BulletinPdfViewer({
           <span className="text-[10px] text-neutral-400">{numPages}쪽</span>
         )}
         <span className="hidden text-[10px] text-neutral-400 sm:inline">
+          좌우·상하 스크롤 · 핀치 확대/축소
+        </span>
+        <span className="text-[10px] text-neutral-400 sm:hidden">
           스크롤 · 핀치 확대/축소
         </span>
-        <span className="text-[10px] text-neutral-400 sm:hidden">핀치 확대/축소</span>
       </div>
       <div
         ref={scrollRef}
-        className="min-h-0 flex-1 overflow-auto overscroll-contain touch-pan-y"
-        style={{ WebkitOverflowScrolling: "touch" }}
+        className="min-h-0 flex-1 overflow-x-auto overflow-y-auto overscroll-contain"
+        style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-x pan-y" }}
         aria-label={title}
       >
         <div
-          className="mx-auto w-fit origin-top px-1 py-2 sm:px-2"
+          className="inline-block p-1 sm:p-2"
           style={
-            pinchScale !== 1
-              ? { transform: `scale(${pinchScale})`, transformOrigin: "top center" }
+            pinchScale !== 1 && layoutSize.w > 0
+              ? {
+                  width: Math.ceil(layoutSize.w * pinchScale),
+                  height: Math.ceil(layoutSize.h * pinchScale),
+                }
               : undefined
           }
         >
-          {pdfDoc &&
-            Array.from({ length: numPages }, (_, i) => (
-              <PdfPageCanvas
-                key={`${src}-page-${i + 1}-z${zoom.toFixed(2)}-v${viewportTick}`}
-                pdf={pdfDoc}
-                pageNumber={i + 1}
-                scale={renderScale}
-              />
-            ))}
+          <div
+            ref={contentRef}
+            className="inline-block origin-top-left"
+            style={
+              pinchScale !== 1
+                ? {
+                    transform: `scale(${pinchScale})`,
+                    transformOrigin: "top left",
+                    width: layoutSize.w > 0 ? layoutSize.w : undefined,
+                  }
+                : undefined
+            }
+          >
+            {pdfDoc &&
+              Array.from({ length: numPages }, (_, i) => (
+                <PdfPageCanvas
+                  key={`${src}-page-${i + 1}-z${zoom.toFixed(2)}-v${viewportTick}`}
+                  pdf={pdfDoc}
+                  pageNumber={i + 1}
+                  scale={renderScale}
+                />
+              ))}
+          </div>
         </div>
       </div>
     </div>
