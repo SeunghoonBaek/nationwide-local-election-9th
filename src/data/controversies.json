@@ -1,0 +1,17 @@
+{
+  "_comment": "Manually curated 'controversy/trait' data for candidates. This qualitative info is not in the official API, so always record it neutrally with a trustworthy source link. `match` is { sido, sgg, name } with partial matching; `name` is required. The sample item is a format guide only (not a real fact) and must be replaced before use.",
+  "items": [
+    {
+      "match": { "sido": "서울특별시", "sgg": "서울특별시", "name": "예시후보" },
+      "tags": ["3선 도전", "공약 이행률 논쟁"],
+      "controversies": [
+        {
+          "summary": "재임 중 추진한 ○○사업 예산 집행을 두고 시의회와 갈등이 있었다.",
+          "date": "2025-11",
+          "source": "https://example.com/news/123",
+          "sourceName": "○○일보"
+        }
+      ]
+    }
+  ]
+}

@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 9th Nationwide Local Election - Candidate & Pledge Comparison (2026-06-03)
 
-## Getting Started
+A web app that lets a user pick their region and compare the **candidates** of that electoral district by **party (affiliation), pledges, traits (career/job/education), and controversies** in a table.
 
-First, run the development server:
+- Data: National Election Commission (NEC) Open API on data.go.kr (election id `20260603`)
+- Stack: Next.js (App Router) + TypeScript + Tailwind CSS
+- Note: the on-screen UI is in Korean (targeted at Korean voters); code, docs, and tooling are in English.
+
+## 1. Get an NEC API service key
+
+1. Sign up / log in at [data.go.kr](https://www.data.go.kr)
+2. Search for and **apply for use ("활용신청")** of these APIs (dev accounts are auto-approved, 10,000 calls/day):
+   - Candidate info (`15000908`)
+   - Election pledges (`ElecPrmsInfoInqireService`)
+   - Code info (`15000897`)
+3. In My Page, copy the **decoding key (일반 인증키(Decoding))**
+
+> Newly approved keys can take ~30-60 minutes to propagate to the gateway. During that window calls may return HTTP 403.
+
+## 2. Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+make setup     # install deps + create .env.local (then set NEC_SERVICE_KEY)
+make check     # verify the key / API connectivity
+make dev       # start dev server at http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+In the app: Province -> Election type -> (District) -> Electoral district, then "후보자 조회".
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> Candidate/pledge data appears in the API only after candidate registration closes (about two weeks before election day).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 3. Controversies data (manual curation)
 
-## Learn More
+This qualitative info is not in the official API, so add it (with sources) in `src/data/controversies.json`.
 
-To learn more about Next.js, take a look at the following resources:
+```json
+{
+  "items": [
+    {
+      "match": { "sido": "서울특별시", "sgg": "서울특별시", "name": "홍길동" },
+      "tags": ["3선 도전"],
+      "controversies": [
+        {
+          "summary": "neutral 1-2 sentence factual summary",
+          "date": "2025-11",
+          "source": "https://...",
+          "sourceName": "Some News"
+        }
+      ]
+    }
+  ]
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `match.name` is required (prevents broad matching by region alone). `sido`/`sgg` use partial matching.
+- There is defamation / neutrality risk, so record only facts with verified sources.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 4. Structure
 
-## Deploy on Vercel
+```
+src/
+  lib/
+    constants.ts        # election id, election type codes (shared with client)
+    nec.ts              # NEC Open API client (server-only)
+    controversies.ts    # controversy data matching
+  data/controversies.json
+  app/
+    api/sido|gusigun|sgg|candidates/route.ts   # API proxy (protects the key)
+    page.tsx            # region selectors + candidate comparison table UI
+scripts/check-nec.mjs   # key / connectivity check
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 5. Limitations / notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Assets, military service, and criminal records are not in this API. If needed, collect them separately from the NEC policy site (policy.nec.go.kr) election bulletins.
+- Proportional representation (metro/basic) is party-vote, so it is excluded from the district selection flow.
+- This service is informational and does not endorse or oppose any candidate.
