@@ -1,9 +1,38 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function bulletinViewerSrc(bulletinPath: string): string {
   return `/api/bulletin?path=${encodeURIComponent(bulletinPath)}`;
+}
+
+const MIN_W = 320;
+const MIN_H = 240;
+const PAD = 24;
+
+const PRESETS = {
+  sm: { w: 480, h: 400 },
+  md: { w: 768, h: 576 },
+  lg: { w: 1024, h: 768 },
+} as const;
+
+type PresetKey = keyof typeof PRESETS;
+
+function clampSize(w: number, h: number) {
+  const maxW = typeof window !== "undefined" ? window.innerWidth - PAD : w;
+  const maxH = typeof window !== "undefined" ? window.innerHeight - PAD : h;
+  return {
+    w: Math.max(MIN_W, Math.min(maxW, w)),
+    h: Math.max(MIN_H, Math.min(maxH, h)),
+  };
+}
+
+function defaultSize() {
+  if (typeof window === "undefined") return PRESETS.md;
+  return clampSize(
+    Math.min(PRESETS.lg.w, window.innerWidth - PAD),
+    Math.min(Math.round(window.innerHeight * 0.85), 820)
+  );
 }
 
 export function BulletinViewerModal({
@@ -16,6 +45,7 @@ export function BulletinViewerModal({
   onClose: () => void;
 }) {
   const src = bulletinViewerSrc(bulletinPath);
+  const [size, setSize] = useState(defaultSize);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -34,6 +64,50 @@ export function BulletinViewerModal({
     };
   }, [handleKeyDown]);
 
+  useEffect(() => {
+    const onWindowResize = () => {
+      setSize((s) => clampSize(s.w, s.h));
+    };
+    window.addEventListener("resize", onWindowResize);
+    return () => window.removeEventListener("resize", onWindowResize);
+  }, []);
+
+  const applyPreset = (key: PresetKey | "full") => {
+    if (key === "full") {
+      setSize(clampSize(window.innerWidth - PAD, window.innerHeight - PAD));
+      return;
+    }
+    setSize(clampSize(PRESETS[key].w, PRESETS[key].h));
+  };
+
+  const startResize = (
+    e: React.PointerEvent,
+    axis: "both" | "x" | "y"
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const start = { x: e.clientX, y: e.clientY, w: size.w, h: size.h };
+
+    const onMove = (ev: PointerEvent) => {
+      const dx = ev.clientX - start.x;
+      const dy = ev.clientY - start.y;
+      setSize(
+        clampSize(
+          axis === "y" ? start.w : start.w + dx,
+          axis === "x" ? start.h : start.h + dy
+        )
+      );
+    };
+
+    const onUp = () => {
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+    };
+
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerup", onUp);
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
@@ -47,15 +121,42 @@ export function BulletinViewerModal({
         aria-label="닫기"
         onClick={onClose}
       />
-      <div className="relative flex h-[min(90vh,820px)] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-2xl dark:border-neutral-700 dark:bg-neutral-900">
-        <div className="flex shrink-0 items-center justify-between gap-3 border-b border-neutral-200 px-4 py-3 dark:border-neutral-700">
+      <div
+        className="relative flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-2xl dark:border-neutral-700 dark:bg-neutral-900"
+        style={{ width: size.w, height: size.h }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex shrink-0 items-center justify-between gap-2 border-b border-neutral-200 px-3 py-2.5 dark:border-neutral-700 sm:px-4 sm:py-3">
           <h2
             id="bulletin-viewer-title"
-            className="truncate text-sm font-semibold text-neutral-800 dark:text-neutral-100"
+            className="min-w-0 truncate text-sm font-semibold text-neutral-800 dark:text-neutral-100"
           >
             {title}
           </h2>
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+            <div
+              className="hidden items-center gap-0.5 sm:flex"
+              role="group"
+              aria-label="창 크기"
+            >
+              {(
+                [
+                  ["sm", "작게"],
+                  ["md", "보통"],
+                  ["lg", "크게"],
+                  ["full", "최대"],
+                ] as const
+              ).map(([key, label]) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => applyPreset(key)}
+                  className="rounded px-1.5 py-0.5 text-[11px] text-neutral-500 hover:bg-neutral-100 hover:text-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
             <a
               href={src}
               target="_blank"
@@ -79,6 +180,40 @@ export function BulletinViewerModal({
           title={title}
           className="min-h-0 flex-1 border-0 bg-neutral-100 dark:bg-neutral-950"
         />
+        {/* Right edge */}
+        <div
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="가로 크기 조절"
+          onPointerDown={(e) => startResize(e, "x")}
+          className="absolute bottom-4 right-0 top-10 w-1.5 cursor-ew-resize touch-none"
+        />
+        {/* Bottom edge */}
+        <div
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="세로 크기 조절"
+          onPointerDown={(e) => startResize(e, "y")}
+          className="absolute bottom-0 left-0 right-4 h-1.5 cursor-ns-resize touch-none"
+        />
+        {/* Corner grip */}
+        <div
+          role="separator"
+          aria-orientation="both"
+          aria-label="창 크기 조절"
+          onPointerDown={(e) => startResize(e, "both")}
+          className="absolute bottom-0 right-0 z-10 flex h-5 w-5 cursor-se-resize touch-none items-end justify-end p-0.5 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+        >
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="currentColor"
+            aria-hidden
+          >
+            <path d="M12 12H10V10H12V12ZM12 8H10V6H12V8ZM8 12H6V10H8V12ZM12 4H10V2H12V4Z" />
+          </svg>
+        </div>
       </div>
     </div>
   );
