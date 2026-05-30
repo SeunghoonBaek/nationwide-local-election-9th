@@ -176,24 +176,46 @@ function MobilePageFrame({
       ([entry]) => {
         if (entry?.isIntersecting) onVisible(index);
       },
-      { rootMargin: "300px 0px" }
+      { rootMargin: "400px 0px" }
     );
     io.observe(el);
     return () => io.disconnect();
   }, [index, onVisible]);
 
+  const embedSrc = blobUrl
+    ? `${blobUrl}#view=Fit&toolbar=0&navpanes=0&scrollbar=0`
+    : null;
+
   return (
     <div
       ref={ref}
-      className="mb-2 w-full bg-white last:mb-0"
-      style={{ height }}
+      className="relative w-full shrink-0 overflow-hidden bg-white"
+      style={{ height, touchAction: "none" }}
     >
-      {blobUrl ? (
-        <iframe
-          src={`${blobUrl}#view=FitH&toolbar=0&navpanes=0`}
-          title={`${title} ${index + 1}쪽`}
-          className="h-full w-full border-0"
-        />
+      {embedSrc ? (
+        <>
+          <object
+            data={embedSrc}
+            type="application/pdf"
+            aria-hidden
+            tabIndex={-1}
+            className="pointer-events-none absolute inset-0 h-full w-full border-0"
+          >
+            <iframe
+              src={embedSrc}
+              title={`${title} ${index + 1}쪽`}
+              scrolling="no"
+              tabIndex={-1}
+              aria-hidden
+              className="pointer-events-none absolute inset-0 h-full w-full border-0"
+            />
+          </object>
+          {/* Pass scroll gestures to the outer container, not the PDF plugin. */}
+          <div
+            className="absolute inset-0 z-10"
+            aria-label={`${title} ${index + 1}쪽`}
+          />
+        </>
       ) : (
         <div className="flex h-full items-center justify-center text-xs text-neutral-400">
           {index + 1}쪽 불러오는 중…
@@ -294,8 +316,9 @@ function MobileNativeViewer({
 
   useEffect(() => {
     if (preparing || loadingMeta || numPages <= 0) return;
-    void ensurePage(0);
-    if (numPages > 1) void ensurePage(1);
+    for (let i = 0; i < Math.min(numPages, 4); i++) {
+      void ensurePage(i);
+    }
   }, [preparing, loadingMeta, numPages, ensurePage]);
 
   return (
@@ -312,20 +335,22 @@ function MobileNativeViewer({
       ) : (
         <div
           ref={scrollRef}
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1"
+          className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-white"
           style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-y" }}
         >
-          {layouts.map((layout, index) => (
-            <MobilePageFrame
-              key={`${src}-mobile-${index + 1}`}
-              index={index}
-              layout={layout}
-              blobUrl={pageUrls[index] ?? null}
-              containerWidth={containerWidth}
-              title={title}
-              onVisible={ensurePage}
-            />
-          ))}
+          <div className="w-full bg-white">
+            {layouts.map((layout, index) => (
+              <MobilePageFrame
+                key={`${src}-mobile-${index + 1}`}
+                index={index}
+                layout={layout}
+                blobUrl={pageUrls[index] ?? null}
+                containerWidth={containerWidth}
+                title={title}
+                onVisible={ensurePage}
+              />
+            ))}
+          </div>
         </div>
       )}
     </>
