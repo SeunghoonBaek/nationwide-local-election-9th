@@ -11,6 +11,7 @@ import {
 } from "@/lib/constants";
 import { matchGusigunToElectionList } from "@/lib/gusigun-names";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { BulletinViewerModal } from "@/components/bulletin-viewer";
 import type { CandidateView } from "./api/candidates/route";
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -650,42 +651,58 @@ function CandidateTraits({ candidate }: { candidate: CandidateView }) {
 
 function PolicyPosterLink({
   policy,
+  candidateName,
 }: {
   policy: NonNullable<CandidateView["pledgePolicy"]>;
+  candidateName?: string;
 }) {
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const canPreview = Boolean(policy.bulletinPath);
+  const title = candidateName
+    ? `${candidateName} 선거공보`
+    : "선거공보";
+
   return (
-    <p className="mt-2 text-xs leading-relaxed text-neutral-400">
-      {policy.bulletinUrl ? (
-        <>
-          <a
-            href={policy.bulletinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          >
-            공약 포스터(선거공보) 보기
-          </a>
-          {" · "}
+    <>
+      <p className="mt-2 text-xs leading-relaxed text-neutral-400">
+        {canPreview ? (
+          <>
+            <button
+              type="button"
+              onClick={() => setViewerOpen(true)}
+              className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              공약 포스터(선거공보) 보기
+            </button>
+            {" · "}
+            <a
+              href={policy.pageUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-neutral-300 underline-offset-2 hover:text-neutral-600 dark:hover:text-neutral-300"
+            >
+              공약마당
+            </a>
+          </>
+        ) : (
           <a
             href={policy.pageUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline decoration-neutral-300 underline-offset-2 hover:text-neutral-600 dark:hover:text-neutral-300"
+            className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
           >
-            공약마당
+            공약마당에서 포스터·선거공보 확인
           </a>
-        </>
-      ) : (
-        <a
-          href={policy.pageUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-        >
-          공약마당에서 포스터·선거공보 확인
-        </a>
+        )}
+      </p>
+      {viewerOpen && policy.bulletinPath && (
+        <BulletinViewerModal
+          title={title}
+          bulletinPath={policy.bulletinPath}
+          onClose={() => setViewerOpen(false)}
+        />
       )}
-    </p>
+    </>
   );
 }
 
@@ -697,7 +714,7 @@ function CandidatePledges({ candidate }: { candidate: CandidateView }) {
     return (
       <div className="text-neutral-400">
         <span>등록된 공약 없음</span>
-        {policy && <PolicyPosterLink policy={policy} />}
+        {policy && <PolicyPosterLink policy={policy} candidateName={candidate.name} />}
       </div>
     );
   }
@@ -733,7 +750,7 @@ function CandidatePledges({ candidate }: { candidate: CandidateView }) {
           {src.note && <> · {src.note}</>}
         </p>
       )}
-      {policy && <PolicyPosterLink policy={policy} />}
+      {policy && <PolicyPosterLink policy={policy} candidateName={candidate.name} />}
     </div>
   );
 }

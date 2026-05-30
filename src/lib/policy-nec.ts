@@ -25,6 +25,8 @@ export interface PolicyPledgeLink {
   pageUrl: string;
   /** CDN URL for the candidate election bulletin (선거공보) PDF, when published */
   bulletinUrl?: string;
+  /** Path segment after /policy_pdf/ — for inline viewer proxy */
+  bulletinPath?: string;
 }
 
 interface PolicyListRow {
@@ -60,7 +62,7 @@ async function postPolicy<T extends Record<string, unknown>>(
   }
 }
 
-function parseBulletinUrl(fileinfo?: string): string | undefined {
+function parseBulletinUrl(fileinfo?: string): { url: string; path: string } | undefined {
   if (!fileinfo) return undefined;
 
   for (const part of fileinfo.split(",")) {
@@ -73,12 +75,14 @@ function parseBulletinUrl(fileinfo?: string): string | undefined {
       label?.includes("공약") ||
       label?.includes("공보")
     ) {
-      return `${CDN_BASE}/policy_pdf/${path}`;
+      return { path, url: `${CDN_BASE}/policy_pdf/${path}` };
     }
   }
 
   const fallback = fileinfo.split("||")[1]?.trim();
-  return fallback ? `${CDN_BASE}/policy_pdf/${fallback}` : undefined;
+  return fallback
+    ? { path: fallback, url: `${CDN_BASE}/policy_pdf/${fallback}` }
+    : undefined;
 }
 
 function buildPageUrl(regionId: string, sggid: string, subSgId: string): string {
@@ -163,8 +167,17 @@ async function loadDistrictLinks(
   for (const row of listRes?.list ?? []) {
     const id = row.huboid?.trim();
     if (!id) continue;
-    const bulletinUrl = parseBulletinUrl(row.fileinfo);
-    links.set(id, bulletinUrl ? { pageUrl, bulletinUrl } : { pageUrl });
+    const bulletin = parseBulletinUrl(row.fileinfo);
+    links.set(
+      id,
+      bulletin
+        ? {
+            pageUrl,
+            bulletinUrl: bulletin.url,
+            bulletinPath: bulletin.path,
+          }
+        : { pageUrl }
+    );
   }
 
   districtCache.set(cacheKey, { links });
