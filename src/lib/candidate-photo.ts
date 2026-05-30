@@ -18,7 +18,9 @@ const FULL_RE =
 const cache = new Map<string, string | null>();
 
 function normalizePhotoUrl(url: string): string {
-  return url.replace(/^http:/i, "https:");
+  // Drop cache-buster query (?ver=...) — next/image rejects unmatched search params.
+  const withoutQuery = url.split("?")[0] ?? url;
+  return withoutQuery.replace(/^http:/i, "https:");
 }
 
 function extractPhotoUrl(html: string): string | undefined {

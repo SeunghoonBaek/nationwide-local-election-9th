@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.nec.go.kr",
-        pathname: "/photo_**",
+        pathname: "/photo_*/**",
       },
     ],
   },
