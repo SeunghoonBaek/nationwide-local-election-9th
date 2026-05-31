@@ -19,7 +19,7 @@ import {
   type HomePersistedSearch,
 } from "@/lib/home-state-storage";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { BulletinViewerModal } from "@/components/bulletin-viewer";
+import { bulletinViewerSrc } from "@/components/bulletin-viewer";
 import type { CandidateView } from "./api/candidates/route";
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -822,58 +822,45 @@ function CandidateTraits({ candidate }: { candidate: CandidateView }) {
 
 function PolicyPosterLink({
   policy,
-  candidateName,
 }: {
   policy: NonNullable<CandidateView["pledgePolicy"]>;
   candidateName?: string;
 }) {
-  const [viewerOpen, setViewerOpen] = useState(false);
   const canPreview = Boolean(policy.bulletinPath);
-  const title = candidateName
-    ? `${candidateName} 선거공보`
-    : "선거공보";
 
   return (
-    <>
-      <p className="mt-2 text-xs leading-relaxed text-neutral-400">
-        {canPreview ? (
-          <>
-            <button
-              type="button"
-              onClick={() => setViewerOpen(true)}
-              className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              공약 포스터(선거공보) 보기
-            </button>
-            {" · "}
-            <a
-              href={policy.pageUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-neutral-300 underline-offset-2 hover:text-neutral-600 dark:hover:text-neutral-300"
-            >
-              공약마당
-            </a>
-          </>
-        ) : (
+    <p className="mt-2 text-xs leading-relaxed text-neutral-400">
+      {canPreview ? (
+        <>
           <a
-            href={policy.pageUrl}
+            href={bulletinViewerSrc(policy.bulletinPath!)}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
           >
-            공약마당에서 포스터·선거공보 확인
+            공약 포스터(선거공보) 새 탭에서 보기
           </a>
-        )}
-      </p>
-      {viewerOpen && policy.bulletinPath && (
-        <BulletinViewerModal
-          title={title}
-          bulletinPath={policy.bulletinPath}
-          onClose={() => setViewerOpen(false)}
-        />
+          {" · "}
+          <a
+            href={policy.pageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-neutral-300 underline-offset-2 hover:text-neutral-600 dark:hover:text-neutral-300"
+          >
+            공약마당
+          </a>
+        </>
+      ) : (
+        <a
+          href={policy.pageUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+        >
+          공약마당에서 포스터·선거공보 확인
+        </a>
       )}
-    </>
+    </p>
   );
 }
 
