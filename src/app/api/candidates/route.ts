@@ -10,6 +10,7 @@ import {
 } from "@/lib/nec";
 import { getCandidatePhotoUrl } from "@/lib/candidate-photo";
 import { getCandidateExtra, type CandidateExtra } from "@/lib/controversies";
+import { inferCandidateTags } from "@/lib/candidate-tags";
 import {
   getManualPledges,
   type PledgeSource,
@@ -59,7 +60,9 @@ export async function GET(req: NextRequest) {
         }
         const photoUrl = await getCandidatePhotoUrl(c.cnddtId);
         const extra = getCandidateExtra(sido, sgg, c.name);
-        return { ...c, pledges, pledgeSource, photoUrl, ...extra };
+        const inferredTags = inferCandidateTags(c.job, c.career1, c.career2);
+        const tags = [...new Set([...(extra.tags ?? []), ...inferredTags])];
+        return { ...c, pledges, pledgeSource, photoUrl, ...extra, tags };
       })
     );
 

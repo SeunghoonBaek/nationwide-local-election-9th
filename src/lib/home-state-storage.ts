@@ -1,4 +1,4 @@
-import type { SgTypeCode } from "@/lib/constants";
+import { SG_TYPES, type SgTypeCode } from "@/lib/constants";
 
 const STORAGE_KEY = "election-june:home";
 
@@ -33,7 +33,7 @@ const EMPTY: HomePersistedState = {
 };
 
 function isSgType(v: string): v is SgTypeCode {
-  return ["3", "4", "5", "6", "11"].includes(v);
+  return v in SG_TYPES;
 }
 
 /** True only when the user returned via browser back/forward (not refresh or direct visit). */

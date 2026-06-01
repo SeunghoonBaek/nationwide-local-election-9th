@@ -5,11 +5,14 @@ All calls include `serviceKey`, `resultType=json`, `numOfRows`, `pageNo`, `sgId`
 
 ## Election identifiers
 
-- `sgId = 20260603` – 9th nationwide local election (2026-06-03).
+- `sgId = 20260603` – 9th nationwide local election (2026-06-03). The
+  **국회의원 재·보궐선거** (National Assembly by-election) held the same day shares
+  this `sgId`; it is distinguished only by `sgTypecode = 2`.
 - `sgTypecode` (election type):
 
 | Code | Election | Region granularity |
 |------|----------|--------------------|
+| 2 | 국회의원 재·보궐선거 (National Assembly by-election) | within gu/si/gun (constituency) |
 | 3 | 시·도지사 (governor/mayor) | province-wide |
 | 4 | 구·시·군의 장 (local head) | per gu/si/gun |
 | 5 | 시·도의원 (provincial council) | within gu/si/gun |
@@ -19,7 +22,42 @@ All calls include `serviceKey`, `resultType=json`, `numOfRows`, `pageNo`, `sgId`
 | 11 | 교육감 (superintendent) | province-wide |
 
 Proportional types (7/8/9) are party votes; the UI excludes them from the
-district flow (`SELECTABLE_SG_TYPES = [3, 11, 4, 5, 6]`).
+district flow (`SELECTABLE_SG_TYPES = [3, 11, 4, 5, 6, 2]`).
+
+### 국회의원 재·보궐선거 (sgTypecode 2)
+
+Only the **14 constituencies** where a seat fell vacant by 2026-04-30 appear for
+`sgId=20260603&sgTypecode=2` (the rest of the country has no by-election). Because
+`getCommonSggCodeList`/candidate calls are filtered by this `sgId`, the live API
+returns only those seats — no hardcoded district list is needed.
+
+| Province (시·도) | Constituency (선거구) | Type |
+|------------------|-----------------------|------|
+| 부산광역시 | 북구갑 | 보궐 |
+| 대구광역시 | 달성군 | 보궐 |
+| 인천광역시 | 연수구갑 | 보궐 |
+| 인천광역시 | 계양구을 | 보궐 |
+| 광주광역시 | 광산구을 | 보궐 |
+| 울산광역시 | 남구갑 | 보궐 |
+| 경기도 | 평택시을 | 재선거 |
+| 경기도 | 안산시갑 | 재선거 |
+| 경기도 | 하남시갑 | 보궐 |
+| 충청남도 | 공주시·부여군·청양군 | 보궐 |
+| 충청남도 | 아산시을 | 보궐 |
+| 전라북도 | 군산시·김제시·부안군갑 | 재선거 |
+| 전라북도 | 군산시·김제시·부안군을 | 보궐 |
+| 제주특별자치도 | 서귀포시 | 보궐 |
+
+Multi-county constituencies (공주·부여·청양, 군산·김제·부안) are returned once per
+member `wiwName`, so the gu/si/gun → 선거구 narrowing in the UI works the same as
+for local-council races. Mayoral by-elections (시장·군수·구청장 보궐) are **not** a
+separate type — they are part of `sgTypecode = 4` (구·시·군의 장) and show up
+automatically in those districts.
+
+> The policy-site bulletin link map (`policy-nec.ts`, `SUB_SG_ID`) does not yet
+> include `sgTypecode 2`, so by-election candidates show NEC API pledges/photos
+> but no 공약 포스터 deep link. Add a `subSgId` for type 2 if/when the
+> policy.nec.go.kr menu for the by-election is confirmed.
 
 ## Endpoints used
 

@@ -11,6 +11,7 @@ const CDN_BASE = "https://cdn.nec.go.kr";
 
 /** policy.nec.go.kr sub-election id (prefix = sgType code) */
 const SUB_SG_ID: Partial<Record<SgTypeCode, string>> = {
+  "2": "220260603",
   "3": "320260603",
   "4": "420260603",
   "5": "520260603",

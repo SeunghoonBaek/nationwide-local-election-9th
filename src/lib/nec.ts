@@ -184,6 +184,23 @@ async function callNec(
 }
 
 const str = (v: unknown): string => (v == null ? "" : String(v).trim());
+const isMetroSido = (sido: string): boolean =>
+  sido.endsWith("특별시") || sido.endsWith("광역시");
+
+/**
+ * For sgType 4 in non-metro provinces, NEC sometimes represents a city-wide
+ * mayor election by a single representative gu label (e.g. 수원시팔달구).
+ * This key collapses both "수원시장안구" and "수원시팔달구" to "수원시".
+ */
+function mayorWiwScopeKey(wiwName: string): string {
+  const cityOrCounty = wiwName.match(/^([가-힣]+(?:시|군))/)?.[1];
+  return cityOrCounty ?? wiwName;
+}
+
+function splitSggAdminTokens(sggName: string): string[] {
+  const tokens = sggName.match(/[가-힣]+?(?:시|군|구)/g) ?? [];
+  return [...new Set(tokens)];
+}
 
 /**
  * List of provinces/metropolitan cities, derived from the (complete) gu/si/gun
@@ -223,16 +240,30 @@ export async function getGusigunList(
   sgTypecode: SgTypeCode,
   sido: string
 ): Promise<string[]> {
+  // For mayoral elections (type 4), show the full administrative list so users
+  // can find their actual address district (e.g. 용인시수지구) even if NEC
+  // election-code rows expose only one representative gu for that city.
+  if (sgTypecode === "4") {
+    return getAdminGusigunList(sido);
+  }
+
   const items = await callNec("CommonCodeService", "getCommonSggCodeList", {
     sgTypecode,
   });
   const set = new Set<string>();
+  const adminSet =
+    sgTypecode === "2" ? new Set(await getAdminGusigunList(sido)) : null;
   for (const it of items) {
     if (str(it.sdName) !== sido) continue;
     const name = str(it.wiwName);
     if (name && name !== sido) set.add(name);
+    if (sgTypecode === "2" && adminSet) {
+      for (const token of splitSggAdminTokens(str(it.sggName))) {
+        if (adminSet.has(token) && token !== sido) set.add(token);
+      }
+    }
   }
-  return [...set];
+  return [...set].sort((a, b) => a.localeCompare(b, "ko"));
 }
 
 /** List of electoral districts matching the election type / province / district */
@@ -245,11 +276,33 @@ export async function getSggList(
     sgTypecode,
   });
   const set = new Set<string>();
+  const metro = isMetroSido(sido);
+  const gusigunScope = gusigun ? mayorWiwScopeKey(gusigun) : "";
+  const gusigunKey = gusigun ? gusigun.replace(/\s+/g, "") : "";
   for (const it of items) {
     if (str(it.sdName) !== sido) continue;
-    if (gusigun && str(it.wiwName) !== gusigun) continue;
-    const name = str(it.sggName);
-    if (name) set.add(name);
+    const wiwName = str(it.wiwName);
+    const sggName = str(it.sggName);
+    if (gusigun) {
+      if (
+        sgTypecode === "4" &&
+        !metro &&
+        mayorWiwScopeKey(wiwName) === gusigunScope
+      ) {
+        // matched by city/county scope
+      } else if (
+        sgTypecode === "2" &&
+        splitSggAdminTokens(sggName)
+          .map((t) => t.replace(/\s+/g, ""))
+          .includes(gusigunKey)
+      ) {
+        // by-election can have multi-city/county districts where wiwName is
+        // only one representative row (e.g. 공주시부여군청양군).
+      } else if (wiwName !== gusigun) {
+        continue;
+      }
+    }
+    if (sggName) set.add(sggName);
   }
   return [...set];
 }
