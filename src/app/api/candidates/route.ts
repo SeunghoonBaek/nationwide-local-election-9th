@@ -68,7 +68,7 @@ export async function GET(req: NextRequest) {
 
     const policyLinks = await getPolicyPledgeLinks(sgType, sido, sgg);
     for (const v of views) {
-      const link = policyLinks.get(v.cnddtId);
+      const link = policyLinks.get(v.cnddtId) ?? policyLinks.get(`party:${v.party}`);
       if (link) v.pledgePolicy = link;
     }
 

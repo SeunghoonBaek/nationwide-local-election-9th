@@ -32,7 +32,11 @@ export interface PolicyPledgeLink {
 
 interface PolicyListRow {
   huboid?: string;
+  jdname?: string;
   fileinfo?: string;
+  filePathName?: string;
+  updtFileName?: string;
+  fileTypeName?: string;
 }
 
 interface DistrictPolicyCache {
@@ -84,6 +88,20 @@ function parseBulletinUrl(fileinfo?: string): { url: string; path: string } | un
   return fallback
     ? { path: fallback, url: `${CDN_BASE}/policy_pdf/${fallback}` }
     : undefined;
+}
+
+function parseBulletinUrlFromPath(
+  filePathName?: string,
+  updtFileName?: string,
+  fileTypeName?: string
+): { url: string; path: string } | undefined {
+  if (!filePathName || !updtFileName) return undefined;
+  if (fileTypeName && !fileTypeName.includes("공보") && !fileTypeName.includes("공약")) {
+    return undefined;
+  }
+  const base = filePathName.endsWith("/") ? filePathName : `${filePathName}/`;
+  const path = `${base}${updtFileName}`.replace(/^\/+/, "");
+  return { path, url: `${CDN_BASE}/policy_pdf/${path}` };
 }
 
 function buildPageUrl(regionId: string, sggid: string, subSgId: string): string {
@@ -167,18 +185,26 @@ async function loadDistrictLinks(
 
   for (const row of listRes?.list ?? []) {
     const id = row.huboid?.trim();
-    if (!id) continue;
-    const bulletin = parseBulletinUrl(row.fileinfo);
-    links.set(
-      id,
+    const partyName = row.jdname?.trim();
+    const bulletin =
+      parseBulletinUrl(row.fileinfo) ??
+      parseBulletinUrlFromPath(row.filePathName, row.updtFileName, row.fileTypeName);
+    const link: PolicyPledgeLink =
       bulletin
         ? {
             pageUrl,
             bulletinUrl: bulletin.url,
             bulletinPath: bulletin.path,
           }
-        : { pageUrl }
-    );
+        : { pageUrl };
+
+    if (id) {
+      links.set(id, link);
+    }
+    // Proportional races (sgType 8/9) are often party-level rows without huboid.
+    if (partyName) {
+      links.set(`party:${partyName}`, link);
+    }
   }
 
   districtCache.set(cacheKey, { links });
