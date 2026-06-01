@@ -14,6 +14,7 @@ src/
   data/
     controversies.json  # Tags + Namuwiki controversy index (built; see data-curation.md)
     pledges-manual.json # Curated pledges (e.g. Suwon council)
+    region-cache.json   # Pre-built sido / gusigun / sgg dropdowns (see build-regions)
   app/
     api/
       sido/route.ts       # GET → province list
@@ -27,6 +28,7 @@ scripts/
   check-nec.mjs              # NEC key / connectivity check
   build-controversies.mjs    # Regenerate controversies.json
   build-pledges-manual.mjs   # Scrape Suwon council pledges + merge supplements
+  build-region-cache.mjs     # Regenerate region-cache.json from NEC code APIs
   scan-missing-pledges.mjs   # Audit districts missing NEC pledges
   verify-pledges.mjs         # Verify manual pledge data
 next.config.ts               # next/image remotePatterns for cdn.nec.go.kr
@@ -55,7 +57,7 @@ Browser (page.tsx)
 
 ## Cascading region selection (page.tsx)
 
-1. **시·도** – `getSidoList()` (17 provinces).
+1. **시·도** – `getSidoList()` (17 provinces). When `src/data/region-cache.json` exists, lists are served from that file (no live NEC call per request).
 2. **선거 종류** – `SELECTABLE_SG_TYPES` = 3, 11, 4, 5, 6.
 3. **구·시·군** – skipped for province-wide types (`TYPES_SIDO_WIDE` = 3, 8, 11).
 4. **선거구** – then fetch candidates.

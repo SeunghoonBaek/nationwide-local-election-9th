@@ -1,5 +1,11 @@
 import "server-only";
 import { SG_ID, SG_TYPES, TYPES_SIDO_WIDE, type SgTypeCode } from "./constants";
+import {
+  getCachedAdminGusigunList,
+  getCachedGusigunList,
+  getCachedSggList,
+  getCachedSidoList,
+} from "./region-cache";
 
 /**
  * Client for the National Election Commission (NEC) Open API on data.go.kr.
@@ -207,6 +213,9 @@ function splitSggAdminTokens(sggName: string): string[] {
  * code list so every region is included regardless of merged governor races.
  */
 export async function getSidoList(): Promise<string[]> {
+  const cached = getCachedSidoList();
+  if (cached) return cached;
+
   const items = await callNec("CommonCodeService", "getCommonGusigunCodeList", {});
   const set = new Set<string>();
   for (const it of items) {
@@ -221,6 +230,9 @@ export async function getSidoList(): Promise<string[]> {
  * Used for address/GPS → region resolution; names match type 5/6 wiwName labels.
  */
 export async function getAdminGusigunList(sido: string): Promise<string[]> {
+  const cached = getCachedAdminGusigunList(sido);
+  if (cached) return cached;
+
   const items = await callNec("CommonCodeService", "getCommonGusigunCodeList", {});
   const set = new Set<string>();
   for (const it of items) {
@@ -240,6 +252,9 @@ export async function getGusigunList(
   sgTypecode: SgTypeCode,
   sido: string
 ): Promise<string[]> {
+  const cached = getCachedGusigunList(sgTypecode, sido);
+  if (cached) return cached;
+
   // For mayoral elections (type 4), show the full administrative list so users
   // can find their actual address district (e.g. 용인시수지구) even if NEC
   // election-code rows expose only one representative gu for that city.
@@ -272,6 +287,9 @@ export async function getSggList(
   sido: string,
   gusigun?: string
 ): Promise<string[]> {
+  const cached = getCachedSggList(sgTypecode, sido, gusigun);
+  if (cached) return cached;
+
   const items = await callNec("CommonCodeService", "getCommonSggCodeList", {
     sgTypecode,
   });

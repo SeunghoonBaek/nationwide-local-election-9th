@@ -35,6 +35,7 @@ When the NEC pledge API returns empty (common for local council races), the app 
 
 ```bash
 make pledges   # scrapes council.suwon.go.kr + merges scripts/pledges-news-supplements.json
+make regions   # rebuild sido / gusigun / sgg dropdown cache (faster region selectors)
 ```
 
 Add challenger pledges from news interviews in `scripts/pledges-news-supplements.json`.

@@ -40,6 +40,9 @@ check: ## Check NEC API key / connectivity
 pledges: ## Rebuild manual pledge fallback (Suwon council + news supplements)
 	node scripts/build-pledges-manual.mjs
 
+regions: ## Rebuild region dropdown cache (sido / gusigun / sgg)
+	node scripts/build-region-cache.mjs
+
 lint: ## Run ESLint
 	$(NPM) run lint
 
