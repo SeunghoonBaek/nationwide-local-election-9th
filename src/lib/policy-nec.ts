@@ -67,6 +67,13 @@ async function postPolicy<T extends Record<string, unknown>>(
   }
 }
 
+/** NEC fileinfo second segment is a PDF path, not display metadata (e.g. "HEIGHT"). */
+function isValidBulletinPath(segment: string): boolean {
+  if (!segment || segment.length < 8) return false;
+  if (/^HEIGHT$/i.test(segment)) return false;
+  return /\.pdf$/i.test(segment) || segment.includes("/PDF/");
+}
+
 function parseBulletinUrl(fileinfo?: string): { url: string; path: string } | undefined {
   if (!fileinfo) return undefined;
 
@@ -74,7 +81,7 @@ function parseBulletinUrl(fileinfo?: string): { url: string; path: string } | un
     const fields = part.split("||");
     const label = fields[0]?.trim();
     const path = fields[1]?.trim();
-    if (!path) continue;
+    if (!path || !isValidBulletinPath(path)) continue;
     if (
       label === "선거공보" ||
       label?.includes("공약") ||
@@ -85,9 +92,10 @@ function parseBulletinUrl(fileinfo?: string): { url: string; path: string } | un
   }
 
   const fallback = fileinfo.split("||")[1]?.trim();
-  return fallback
-    ? { path: fallback, url: `${CDN_BASE}/policy_pdf/${fallback}` }
-    : undefined;
+  if (fallback && isValidBulletinPath(fallback)) {
+    return { path: fallback, url: `${CDN_BASE}/policy_pdf/${fallback}` };
+  }
+  return undefined;
 }
 
 function parseBulletinUrlFromPath(
@@ -186,9 +194,10 @@ async function loadDistrictLinks(
   for (const row of listRes?.list ?? []) {
     const id = row.huboid?.trim();
     const partyName = row.jdname?.trim();
+    // Proportional rows (sgType 8/9) often use filePathName + updtFileName; fileinfo may be "1||HEIGHT".
     const bulletin =
-      parseBulletinUrl(row.fileinfo) ??
-      parseBulletinUrlFromPath(row.filePathName, row.updtFileName, row.fileTypeName);
+      parseBulletinUrlFromPath(row.filePathName, row.updtFileName, row.fileTypeName) ??
+      parseBulletinUrl(row.fileinfo);
     const link: PolicyPledgeLink =
       bulletin
         ? {
